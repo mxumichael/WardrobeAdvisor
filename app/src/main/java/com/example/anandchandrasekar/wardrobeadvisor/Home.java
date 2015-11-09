@@ -38,9 +38,6 @@ public class Home extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mTextView = (TextView) findViewById(R.id.nfc_test);
-        mTextView.setText("changing textview test");
-
         nfcTest();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
