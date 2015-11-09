@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">WardrobeAdvisor</string>
     <string name="action_settings">Settings</string>
+    <string name="filter_kind_color">filter_kind_color</string>
+    <string name="filter_kind_type">filter_kind_type</string>
+    <string name="filter_kind_weather">filter_kind_weather</string>
 </resources>
