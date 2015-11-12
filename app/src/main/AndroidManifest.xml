@@ -2,6 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.anandchandrasekar.wardrobeadvisor" >
 
+    <!--    android NFC manifest enteries begin    -->
+    <!-- NFC permissions -->
+    <uses-permission android:name="android.permission.NFC" />
+    <!-- NFC permissions version 10 supports read/write-->
+    <uses-sdk android:minSdkVersion="10"/>
+    <!-- only displays in app store if device supports NFC -->
+    <uses-feature android:name="android.hardware.nfc" android:required="true" />
+    <!--    android NFC manifest enteries end    -->
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,9 +26,22 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+            <!-- more android NFC stuff, to be placed within intent-filter -->
+               <!-- <action android:name="android.nfc.action.TECH_DISCOVERED"/> -->
+                 <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+                 <category android:name="android.intent.category.DEFAULT"/>
+                 <data android:mimeType="text/plain" />
+                <!-- end of android NFC stuff, to be placed within intent-filter -->
+
+            </intent-filter>
         </activity>
         <activity android:name=".FilterBarTestActivity" >
         </activity>
+        <activity android:name=".nfc_test_page" >
+        </activity>
     </application>
+
 
 </manifest>
