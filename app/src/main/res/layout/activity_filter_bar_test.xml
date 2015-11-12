@@ -48,7 +48,8 @@
                     android:layout_width="0dip"
                     android:layout_height="fill_parent"
                     android:layout_weight="0.10"
-                    android:text="Button 1" />
+                    android:text="Prev"
+                    android:textSize="6sp"/>
 
                 <android.support.v4.view.ViewPager
                     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -63,7 +64,8 @@
                     android:layout_width="0dip"
                     android:layout_height="fill_parent"
                     android:layout_weight="0.10"
-                    android:text="Button 3"/>
+                    android:text="Next"
+                    android:textSize="6sp"/>
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

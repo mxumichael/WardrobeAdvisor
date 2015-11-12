@@ -24,6 +24,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.Button;
 
 /**
  * Demonstrates a "screen-slide" animation using a {@link ViewPager}. Because {@link ViewPager}
@@ -39,18 +41,12 @@ public class FilterBarTestActivity extends FragmentActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 2;
+    private static final int NUM_PAGES = 3;
 
-    /**
-     * The pager widget, which handles animation and allows swiping horizontally to access previous
-     * and next wizard steps.
-     */
     private ViewPager filterPager;
-
-    /**
-     * The pager adapter, which provides the pages to the view pager widget.
-     */
     private PagerAdapter filterPagerAdapter;
+    private Button prevFilterPageButton;
+    private Button nextFilterPageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +65,61 @@ public class FilterBarTestActivity extends FragmentActivity {
                 // fragment expose actions itself (rather than the activity exposing actions),
                 // but for simplicity, the activity provides the actions in this sample.
                 invalidateOptionsMenu();
+                updatePagerNavigationButtons(position);
             }
         });
+
+        prevFilterPageButton = (Button) findViewById(R.id.prevFilterButton);
+        prevFilterPageButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                filterPager.setCurrentItem(filterPager.getCurrentItem()-1, true);
+                updatePagerNavigationButtons(filterPager.getCurrentItem());
+            }
+        });
+        nextFilterPageButton = (Button) findViewById(R.id.nextFilterButton);
+        nextFilterPageButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                filterPager.setCurrentItem(filterPager.getCurrentItem()+1, true);
+                updatePagerNavigationButtons(filterPager.getCurrentItem());
+            }
+        });
+        updatePagerNavigationButtons(0);
     }
 
-//    @Override
+    private void updatePagerNavigationButtons(int currentPageNumber) {
+        nextFilterPageButton.setEnabled(true);
+        prevFilterPageButton.setEnabled(true);
+        if(currentPageNumber == NUM_PAGES-1) {
+            nextFilterPageButton.setEnabled(false);
+        } else if (currentPageNumber == 0) {
+            prevFilterPageButton.setEnabled(false);
+        }
+    }
+
+    private class FilterPagerAdapter extends FragmentStatePagerAdapter {
+        public FilterPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch(position) {
+                case 0: return FilterBarFragment.create(getString(R.string.filter_kind_color));
+                case 1: return FilterBarFragment.create(getString(R.string.filter_kind_weather));
+                case 2: return FilterBarFragment.create(getString(R.string.filter_kind_type));
+            }
+
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_PAGES;
+        }
+
+    }
+
+    //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        super.onCreateOptionsMenu(menu);
 //        getMenuInflater().inflate(R.menu.activity_screen_slide, menu);
@@ -114,26 +160,4 @@ public class FilterBarTestActivity extends FragmentActivity {
 //
 //        return super.onOptionsItemSelected(item);
 //    }
-
-
-    private class FilterPagerAdapter extends FragmentStatePagerAdapter {
-        public FilterPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch(position) {
-                case 0: return FilterBarFragment.create(getString(R.string.filter_kind_color));
-                case 1: return FilterBarFragment.create(getString(R.string.filter_kind_weather));
-            }
-
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
-        }
-    }
 }
