@@ -39,6 +39,8 @@
         </activity>
         <activity android:name=".FilterBarTestActivity" >
         </activity>
+        <activity android:name=".nfc_test_page" >
+        </activity>
     </application>
 
 
