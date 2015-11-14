@@ -57,7 +57,6 @@ public class FilterBarFragment extends Fragment {
         super.onCreate(savedInstanceState);
         filterKind = getArguments().getString(ARG_FILTER_KIND);
         dbHelper = new DBHelper(getActivity());
-        dbHelper.getWritableDatabase();
         populateFilterLabels(filterKind);
     }
 
@@ -85,31 +84,31 @@ public class FilterBarFragment extends Fragment {
         filterImageList = new ArrayList<String>();
 
         //load the filters from the database
-//        ArrayList<Filter> filters = dbHelper.getFiltersOfKind(filterKind);
-//        for(Filter currFilter: filters) {
-//            filterTextList.add(currFilter.getFilterName());
-//        }
+        ArrayList<Filter> filters = dbHelper.getFiltersOfKind(filterKind);
+        for(Filter currFilter: filters) {
+            filterTextList.add(currFilter.getFilterName());
+        }
 
         //right now using static entries
-        if(filterKind.equals(getString(R.string.filter_kind_color))) {
-            filterTextList.add("Red");
-            filterTextList.add("Blue");
-            filterTextList.add("Green");
-            for (int i=0; i<10; i++) {
-                filterTextList.add("orange");
-            }
-        } else if(filterKind.equals(getString(R.string.filter_kind_type))) {
-            filterTextList.add("Shirt");
-            filterTextList.add("Shorts");
-            filterTextList.add("Blazer");
-            for (int i=0; i<10; i++) {
-                filterTextList.add("Sock");
-            }
-        } else if(filterKind.equals(getString(R.string.filter_kind_weather))) {
-            filterTextList.add("Sunny");
-            filterTextList.add("Rainy");
-            filterTextList.add("Cold");
-        }
+//        if(filterKind.equals(getString(R.string.filter_kind_color))) {
+//            filterTextList.add("Red");
+//            filterTextList.add("Blue");
+//            filterTextList.add("Green");
+//            for (int i=0; i<10; i++) {
+//                filterTextList.add("orange");
+//            }
+//        } else if(filterKind.equals(getString(R.string.filter_kind_type))) {
+//            filterTextList.add("Shirt");
+//            filterTextList.add("Shorts");
+//            filterTextList.add("Blazer");
+//            for (int i=0; i<10; i++) {
+//                filterTextList.add("Sock");
+//            }
+//        } else if(filterKind.equals(getString(R.string.filter_kind_weather))) {
+//            filterTextList.add("Sunny");
+//            filterTextList.add("Rainy");
+//            filterTextList.add("Cold");
+//        }
     }
 
 }

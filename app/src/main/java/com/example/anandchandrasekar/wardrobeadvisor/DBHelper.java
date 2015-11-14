@@ -31,7 +31,8 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Filter> getFiltersOfKind(String kind) {
+        SQLiteDatabase db = this.getWritableDatabase();
         Log.d("", "getting filter of kind "+ kind);
-        return FilterTableHelper.getFiltersOfKind(this.database, kind);
+        return FilterTableHelper.getFiltersOfKind(db, kind);
     }
 }
