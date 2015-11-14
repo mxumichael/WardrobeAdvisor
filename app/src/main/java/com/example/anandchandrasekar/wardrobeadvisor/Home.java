@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class Home extends AppCompatActivity {
@@ -21,6 +23,8 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        setupClothsList();
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -44,6 +48,16 @@ public class Home extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    private void setupClothsList() {
+        String[] codeLearnChapters = new String[]{"Android Introduction", "Android Setup/Installation", "Android Hello World",
+                "Android Layouts/Viewgroups", "Android Activity & Lifecycle", "Intents in Android"};
+
+        ArrayAdapter<String> codeLearnArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, codeLearnChapters);
+
+        ListView codeLearnLessons = (ListView) findViewById(R.id.listView1);
+        codeLearnLessons.setAdapter(codeLearnArrayAdapter);
     }
 
     private void nfcTest() {
