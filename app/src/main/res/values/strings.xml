@@ -11,4 +11,27 @@
         <item>QR Codes</item>
     </string-array>
     <string name="scanning_mode">Scanning Mode</string>
+
+    <!-- SQL stuff -->
+    <string name="create_item_filter_sql">
+    CREATE TABLE Item_Filter
+    (
+        item_id INTEGER REFERENCES Item,
+        filter_type VARCHAR(255) NOT NULL,
+        filter_id INTEGER NOT NULL,
+        name VARCHAR(255) NOT NULL
+    )
+    </string>
+
+    <string name="create_item_sql">
+    CREATE TABLE Item
+    (
+      item_id           INTEGER PRIMARY KEY,
+      name              VARCHAR(255),
+      description       VARCHAR(255),
+      size              VARCHAR(255),
+      state             INTEGER,
+      image             BLOB
+    )
+    </string>
 </resources>
