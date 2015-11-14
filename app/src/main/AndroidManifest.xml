@@ -41,6 +41,8 @@
         </activity>
         <activity android:name=".nfc_test_page" >
         </activity>
+        <activity android:name=".SettingsView" >
+        </activity>
     </application>
 
 

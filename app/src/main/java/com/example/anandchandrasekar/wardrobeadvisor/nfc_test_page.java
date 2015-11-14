@@ -50,6 +50,7 @@ public class nfc_test_page extends AppCompatActivity {
 //        });
     }
 
+
     private void nfcTest() {
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -207,6 +208,9 @@ public class nfc_test_page extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent i = new Intent(getApplicationContext(), SettingsView.class);
+            i.putExtra("option",R.id.action_settings);
+            startActivity(i);
             return true;
         }
 

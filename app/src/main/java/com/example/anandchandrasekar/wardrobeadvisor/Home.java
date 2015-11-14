@@ -1,5 +1,6 @@
 package com.example.anandchandrasekar.wardrobeadvisor;
 
+import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
@@ -99,6 +100,9 @@ public class Home extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent i = new Intent(getApplicationContext(), SettingsView.class);
+            i.putExtra("option", R.id.action_settings);
+            startActivity(i);
             return true;
         }
 
