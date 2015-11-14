@@ -11,11 +11,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class Home extends AppCompatActivity {
 
+    ExpandableListAdapter listAdapter;
+    ExpandableListView expListView;
+    List<String> listDataHeader;
+    HashMap<String, List<String>> listDataChild;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +61,58 @@ public class Home extends AppCompatActivity {
     }
 
     private void setupClothsList() {
-        String[] codeLearnChapters = new String[]{"Android Introduction", "Android Setup/Installation", "Android Hello World",
-                "Android Layouts/Viewgroups", "Android Activity & Lifecycle", "Intents in Android"};
+        // get the listview
+        expListView = (ExpandableListView) findViewById(R.id.lvExp);
 
-        ArrayAdapter<String> codeLearnArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, codeLearnChapters);
+        // preparing list data
+        prepareListData();
 
-        ListView codeLearnLessons = (ListView) findViewById(R.id.listView1);
-        codeLearnLessons.setAdapter(codeLearnArrayAdapter);
+        listAdapter = new ClothsAdapter(this, listDataHeader, listDataChild);
+
+        // setting list adapter
+        expListView.setAdapter(listAdapter);
+    }
+
+    /*
+    * Preparing the list data
+    */
+    private void prepareListData() {
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<String>>();
+
+        // Adding child data
+        listDataHeader.add("Top 250");
+        listDataHeader.add("Now Showing");
+        listDataHeader.add("Coming Soon..");
+
+        // Adding child data
+        List<String> top250 = new ArrayList<String>();
+        top250.add("The Shawshank Redemption");
+        top250.add("The Godfather");
+        top250.add("The Godfather: Part II");
+        top250.add("Pulp Fiction");
+        top250.add("The Good, the Bad and the Ugly");
+        top250.add("The Dark Knight");
+        top250.add("12 Angry Men");
+
+        List<String> nowShowing = new ArrayList<String>();
+        nowShowing.add("The Conjuring");
+        nowShowing.add("Despicable Me 2");
+        nowShowing.add("Turbo");
+        nowShowing.add("Grown Ups 2");
+        nowShowing.add("Red 2");
+        nowShowing.add("The Wolverine");
+
+        List<String> comingSoon = new ArrayList<String>();
+        comingSoon.add("2 Guns");
+        comingSoon.add("The Smurfs 2");
+        comingSoon.add("The Spectacular Now");
+        comingSoon.add("The Canyons");
+        comingSoon.add("Europa Report");
+
+        listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
+        listDataChild.put(listDataHeader.get(1), nowShowing);
+        listDataChild.put(listDataHeader.get(2), comingSoon);
     }
 
     private void nfcTest() {
@@ -66,7 +121,7 @@ public class Home extends AppCompatActivity {
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         String is_nfc_ok = nfcSupportCheck();
-        if (is_nfc_ok.equals("FAIL")){
+        if (is_nfc_ok.equals("FAIL")) {
             return;
         }
         setContentView(R.layout.nfc_test_page);
@@ -88,10 +143,10 @@ public class Home extends AppCompatActivity {
         }
 
         if (!mNfcAdapter.isEnabled()) {
-            Toast.makeText(this,"NFC is disabled.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "NFC is disabled.", Toast.LENGTH_LONG).show();
             return "FAIL";
         } else {
-            Toast.makeText(this,"NFC is OK.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "NFC is OK.", Toast.LENGTH_LONG).show();
         }
         return "OK";
     }
