@@ -22,12 +22,14 @@ public class FilterTableHelper {
 
 
     public static void createTable(SQLiteDatabase database,  Context context) {
-        database.execSQL(
-                "create table " + TABLE_NAME +
-                        " (" + COLUMN_ID + " integer primary key, " +
-                        COLUMN_FILTER_NAME + " text, " + COLUMN_FILTER_KIND + " text, " +
-                        COLUMN_FILTER_IMAGE_PATH +  " text)"
-        );
+        database.execSQL(context.getString(R.string.create_item_filter_sql));
+
+//        database.execSQL(
+//                "create table " + TABLE_NAME +
+//                        " (" + COLUMN_ID + " integer primary key, " +
+//                        COLUMN_FILTER_NAME + " text, " + COLUMN_FILTER_KIND + " text, " +
+//                        COLUMN_FILTER_IMAGE_PATH +  " text)"
+//        );
         loadDefaultFilters(database, context);
         Log.d("", "creating table");
     }
