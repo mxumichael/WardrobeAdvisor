@@ -69,11 +69,16 @@ public class FilterTableHelper {
 
         ArrayList<Filter> filters = new ArrayList<Filter>();
         while (res.isAfterLast() == false) {
-            Filter currFilter = new Filter(res.getInt(res.getColumnIndex(COLUMN_FILTER_ID)),
-                    res.getString(res.getColumnIndex(COLUMN_FILTER_NAME)),
-                    res.getString(res.getColumnIndex(COLUMN_FILTER_KIND)),
-                    res.getString(res.getColumnIndex(COLUMN_FILTER_IMAGE_PATH)),
-                    res.getInt(res.getColumnIndex(COLUMN_ITEM_ID)));
+            int anInt = res.getInt(res.getColumnIndex(COLUMN_FILTER_ID));
+            String string = res.getString(res.getColumnIndex(COLUMN_FILTER_NAME));
+            String string1 = res.getString(res.getColumnIndex(COLUMN_FILTER_KIND));
+            String string2 = null;
+            int anInt1 = res.getInt(res.getColumnIndex(COLUMN_ITEM_ID));
+            Filter currFilter = new Filter(anInt,
+                    string,
+                    string1,
+                    string2,
+                    anInt1);
             filters.add(currFilter);
             res.moveToNext();
         }
