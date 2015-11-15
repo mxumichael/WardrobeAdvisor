@@ -7,6 +7,10 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -21,6 +25,10 @@ public class ItemTableHelper {
     private static final String COLUMN_SIZE = "size";
     private static final String COLUMN_STATE = "state";
     private static final String COLUMN_IMAGE = "image";
+    private static final String COLUMN_TYPE = "type";
+    private static final String COLUMN_WEATHER = "weather";
+    private static final String COLUMN_COLOR = "color";
+    private static final String COLUMN_BRAND = "brand";
 
 
     public static void createTable(SQLiteDatabase database, Context context) {
@@ -31,9 +39,13 @@ public class ItemTableHelper {
                 COLUMN_DESC + "      VARCHAR(255),\n" +
                 COLUMN_SIZE + "              VARCHAR(255),\n" +
                 COLUMN_STATE + "             INTEGER,\n" +
-                COLUMN_IMAGE + "             BLOB\n" +
+                COLUMN_IMAGE + "             VARCHAR(255),\n" +
+                COLUMN_TYPE + "             VARCHAR(255),\n" +
+                COLUMN_WEATHER + "             VARCHAR(255),\n" +
+                COLUMN_COLOR + "             VARCHAR(255),\n" +
+                COLUMN_BRAND + "             VARCHAR(255)\n" +
                 "    )");
-        loadDefaultFilters(database, context);
+        loadDefaultItems(database, context);
         Log.d("", "creating table");
     }
 
@@ -42,6 +54,13 @@ public class ItemTableHelper {
         contentValues.put(COLUMN_ID, item.getId());
         contentValues.put(COLUMN_NAME, item.getName());
         contentValues.put(COLUMN_DESC, item.getDescription());
+        contentValues.put(COLUMN_SIZE, item.getSize());
+        contentValues.put(COLUMN_STATE, item.getState());
+        contentValues.put(COLUMN_IMAGE, item.getImagePath());
+        contentValues.put(COLUMN_TYPE, item.getType());
+        contentValues.put(COLUMN_WEATHER, item.getWeather());
+        contentValues.put(COLUMN_COLOR, item.getColor());
+        contentValues.put(COLUMN_BRAND, item.getBrand());
         database.insert(TABLE_NAME, null, contentValues);
     }
 
@@ -67,7 +86,13 @@ public class ItemTableHelper {
         while (res.isAfterLast() == false) {
             Item newItem = new Item(res.getInt(res.getColumnIndex(COLUMN_ID)),
                     res.getString(res.getColumnIndex(COLUMN_NAME)),
-                    res.getString(res.getColumnIndex(COLUMN_DESC)));
+                    res.getString(res.getColumnIndex(COLUMN_TYPE)),
+                    res.getString(res.getColumnIndex(COLUMN_COLOR)),
+                    res.getString(res.getColumnIndex(COLUMN_SIZE)),
+                    res.getString(res.getColumnIndex(COLUMN_BRAND)),
+                    res.getString(res.getColumnIndex(COLUMN_WEATHER)),
+                    res.getString(res.getColumnIndex(COLUMN_DESC)),
+                    res.getString(res.getColumnIndex(COLUMN_IMAGE)));
             items.add(newItem);
             res.moveToNext();
         }
@@ -78,19 +103,41 @@ public class ItemTableHelper {
         return getItemsWithQuery(database, "select * from " + TABLE_NAME);
     }
 
-    public static ArrayList<Item> getItemById(SQLiteDatabase database, int id) {
-        return getItemsWithQuery(database, "select * from " + TABLE_NAME + " where " + COLUMN_ID + " = " + id);
+    public static Item getItemById(SQLiteDatabase database, int id) {
+        ArrayList<Item> list = getItemsWithQuery(database, "select * from " + TABLE_NAME + " where " + COLUMN_ID + " = " + id);
+        return list.get(0);
     }
 
-    public static void loadDefaultFilters(SQLiteDatabase db, Context context) {
-        insertItem(db, new Item(1, "Red Shirt", "abcdef"));
-        insertItem(db, new Item(2, "Blue Sweater", ""));
-        insertItem(db, new Item(3, "Green", ""));
-        insertItem(db, new Item(4, "Shirt", ""));
-        insertItem(db, new Item(5, "Shorts", ""));
-        insertItem(db, new Item(6, "Blazer", ""));
-        insertItem(db, new Item(7, "Sunny", ""));
-        insertItem(db, new Item(8, "Rainy", ""));
-        insertItem(db, new Item(9, "Cold", ""));
+    public static void loadDefaultItems(SQLiteDatabase db, Context context) {
+
+        JSONObject jsonRObject = null;
+        try {
+            jsonRObject = new JSONObject(context.getString(R.string.item_json));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONArray jsonArray = jsonRObject.optJSONArray("Items");
+        for(int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = jsonArray.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            int id = Integer.parseInt(jsonObject.optString("id").toString());
+            String name = jsonObject.optString("name").toString();
+            String type = jsonObject.optString("type").toString();
+            String color = jsonObject.optString("color").toString();
+            String size = jsonObject.optString("size").toString();
+            String brand = jsonObject.optString("brand").toString();
+            String weather = jsonObject.optString("weather").toString();
+            String desc = jsonObject.optString("desc").toString();
+            String image = jsonObject.optString("image").toString();
+            insertItem(db, new Item(id, name, type, color, size, brand, weather, desc, image));
+        }
+        insertItem(db, new Item(2, "My Red Shirt", "shirt", "red", "L", "TH", "Casual", "", "ic_launcher"));
+        insertItem(db, new Item(3, "My Red Shirt", "shirt", "red", "L", "TH", "Casual", "", "ic_launcher"));
+        insertItem(db, new Item(4, "My Red Shirt", "shirt", "red", "L", "TH", "Casual", "", "ic_launcher"));
+        insertItem(db, new Item(5, "My Red Shirt", "shirt", "red", "L", "TH", "Casual", "", "ic_launcher"));
     }
 }

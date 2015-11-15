@@ -12,4 +12,22 @@
     </string-array>
     <string name="scanning_mode">Scanning Mode</string>
     <string name="title_activity_view_item">View Item</string>
+
+    <string name="item_json">
+        {
+            "Items" : [
+                {
+                    "id":"1",
+                    "name":\"My Fav Blue Shirt\",
+                    "type":"Shirt",
+                    "color":"blue,
+                    "size":"L",
+                    "brand":"USPolo",
+                    "weather":"Casual",
+                    "desc":"abc",
+                    "image":"blue_polo_shirt"
+                }
+            ]
+        }
+    </string>
 </resources>

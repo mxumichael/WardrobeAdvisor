@@ -59,6 +59,18 @@ public class Home extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        FloatingActionButton viewtest = (FloatingActionButton) findViewById(R.id.viewtest);
+        viewtest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                Intent i = new Intent(getApplicationContext(), ViewItemActivity.class);
+                i.putExtra("item_id", 1);
+                startActivity(i);
+            }
+        });
     }
 
     private void setupClothsList() {
