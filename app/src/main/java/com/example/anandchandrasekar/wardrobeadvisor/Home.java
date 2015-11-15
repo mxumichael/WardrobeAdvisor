@@ -119,22 +119,6 @@ public class Home extends AppCompatActivity {
         listDataHeader.add(dirtyStr);
         listDataHeader.add(inWashStr);
 
-        ArrayList<String> cleanClothes = new ArrayList<>();
-        ArrayList<String> dirtyClothes = new ArrayList<>();
-        ArrayList<String> inWashClothes = new ArrayList<>();
-
-        for (int i = 0; i < cleanItems.size(); i++) {
-            cleanClothes.add(cleanItems.get(i).getName());
-        }
-
-        for (int i = 0; i < dirtyItems.size(); i++) {
-            dirtyClothes.add(dirtyItems.get(i).getName());
-        }
-
-        for (int i = 0; i < inWashItems.size(); i++) {
-            inWashClothes.add(inWashItems.get(i).getName());
-        }
-
         listDataChild.put(listDataHeader.get(0), cleanItems); // Header, Child data
         listDataChild.put(listDataHeader.get(1), dirtyItems);
         listDataChild.put(listDataHeader.get(2), inWashItems);
