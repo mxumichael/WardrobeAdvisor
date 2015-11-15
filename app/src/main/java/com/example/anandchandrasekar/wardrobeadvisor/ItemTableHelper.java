@@ -14,18 +14,25 @@ import java.util.ArrayList;
  */
 public class ItemTableHelper {
 
-    private static final String TABLE_NAME = "items";
+    private static final String TABLE_NAME = "Item";
     private static final String COLUMN_ID = "item_id";
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_DESC = "description";
+    private static final String COLUMN_SIZE = "size";
+    private static final String COLUMN_STATE = "state";
+    private static final String COLUMN_IMAGE = "image";
 
 
-    public static void createTable(SQLiteDatabase database,  Context context) {
-        database.execSQL(
-                "create table " + TABLE_NAME +
-                        " (" + COLUMN_ID + " integer primary key, " +
-                        COLUMN_NAME + " text, " + COLUMN_DESC + " text)"
-        );
+    public static void createTable(SQLiteDatabase database, Context context) {
+        database.execSQL("    CREATE TABLE " + TABLE_NAME + "\n" +
+                "    (\n" +
+                COLUMN_ID + "          INTEGER PRIMARY KEY,\n" +
+                COLUMN_NAME + "              VARCHAR(255),\n" +
+                COLUMN_DESC + "      VARCHAR(255),\n" +
+                COLUMN_SIZE + "              VARCHAR(255),\n" +
+                COLUMN_STATE + "             INTEGER,\n" +
+                COLUMN_IMAGE + "             BLOB\n" +
+                "    )");
         loadDefaultFilters(database, context);
         Log.d("", "creating table");
     }
@@ -38,26 +45,26 @@ public class ItemTableHelper {
         database.insert(TABLE_NAME, null, contentValues);
     }
 
-    public static int numberOfRows(SQLiteDatabase db){
+    public static int numberOfRows(SQLiteDatabase db) {
         int numRows = (int) DatabaseUtils.queryNumEntries(db, TABLE_NAME);
         return numRows;
     }
 
-    public static boolean updateItem (SQLiteDatabase db, Filter updatedFilter) {
+    public static boolean updateItem(SQLiteDatabase db, Filter updatedFilter) {
 
         return true;
     }
 
-    public static Integer deleteItem (SQLiteDatabase db, Integer id) {
-        return db.delete(TABLE_NAME, COLUMN_ID + " = ? ", new String[] { Integer.toString(id) });
+    public static Integer deleteItem(SQLiteDatabase db, Integer id) {
+        return db.delete(TABLE_NAME, COLUMN_ID + " = ? ", new String[]{Integer.toString(id)});
     }
 
     private static ArrayList<Item> getItemsWithQuery(SQLiteDatabase database, String query) {
-        Cursor res =  database.rawQuery(query, null);
+        Cursor res = database.rawQuery(query, null);
         res.moveToFirst();
 
         ArrayList<Item> items = new ArrayList<Item>();
-        while(res.isAfterLast() == false){
+        while (res.isAfterLast() == false) {
             Item newItem = new Item(res.getInt(res.getColumnIndex(COLUMN_ID)),
                     res.getString(res.getColumnIndex(COLUMN_NAME)),
                     res.getString(res.getColumnIndex(COLUMN_DESC)));
