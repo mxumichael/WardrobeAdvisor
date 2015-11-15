@@ -19,13 +19,24 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/scanning_mode"
-        android:id="@+id/textView" />
+        android:text="Scanning Mode"
+        android:id="@+id/scanning_mode_label" />
 
-    <Spinner
-        android:id="@+id/scanning_mode_array"
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical" />
+        android:orientation="vertical">
+        <RadioButton android:id="@+id/radio_NFC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NFC"
+            android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/radio_QR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QR"
+            android:onClick="onRadioButtonClicked"/>
+    </RadioGroup>
 
 </LinearLayout>
