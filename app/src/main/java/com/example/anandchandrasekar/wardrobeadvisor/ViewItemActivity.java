@@ -24,10 +24,10 @@ public class ViewItemActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
-        Integer id = intent.getIntExtra("item_id", -1);
+        long id = intent.getLongExtra("item_id", -1);
 
         DBHelper dbHelper = new DBHelper(this);
-        Item item = dbHelper.getItemById(1);
+        Item item = dbHelper.getItemById((int)id);
 
         ImageView img  = (ImageView)findViewById(R.id.item_image);
         int imgId = getResources().getIdentifier(item.getImagePath(), "drawable", getApplicationContext().getPackageName());

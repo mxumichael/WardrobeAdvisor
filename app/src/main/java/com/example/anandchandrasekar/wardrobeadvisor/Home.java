@@ -23,7 +23,7 @@ public class Home extends AppCompatActivity {
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
+    HashMap<String, List<Item>> listDataChild;
     private DBHelper dbHelper;
 
     @Override
@@ -76,6 +76,14 @@ public class Home extends AppCompatActivity {
         // get the listview
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
 
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                long item_id = expListView.getExpandableListAdapter().getChildId(groupPosition, childPosition);
+                displayItem(item_id);
+                return false;
+            }
+        });
         // preparing list data
         prepareListData();
 
@@ -85,6 +93,11 @@ public class Home extends AppCompatActivity {
         expListView.setAdapter(listAdapter);
     }
 
+    private void displayItem(long value) {
+        Intent intent = new Intent(this, ViewItemActivity.class);
+        intent.putExtra("item_id", value);
+        startActivity(intent);
+    }
     /*
     * Preparing the list data
     */
@@ -99,7 +112,7 @@ public class Home extends AppCompatActivity {
         String inWashStr = "In Wash (" + inWashItems.size() + ")";
 
         listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
+        listDataChild = new HashMap<String, List<Item>>();
 
         // Adding child data
         listDataHeader.add(cleanStr);
@@ -122,9 +135,9 @@ public class Home extends AppCompatActivity {
             inWashClothes.add(inWashItems.get(i).getName());
         }
 
-        listDataChild.put(listDataHeader.get(0), cleanClothes); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), dirtyClothes);
-        listDataChild.put(listDataHeader.get(2), inWashClothes);
+        listDataChild.put(listDataHeader.get(0), cleanItems); // Header, Child data
+        listDataChild.put(listDataHeader.get(1), dirtyItems);
+        listDataChild.put(listDataHeader.get(2), inWashItems);
     }
 
     private void nfcTest() {

@@ -15,24 +15,26 @@ public class ClothsAdapter extends BaseExpandableListAdapter {
     private Context _context;
     private List<String> _listDataHeader; // header titles
     // child data in format of header title, child title
-    private HashMap<String, List<String>> _listDataChild;
+    private HashMap<String, List<Item>> _listDataChild;
 
     public ClothsAdapter(Context context, List<String> listDataHeader,
-                         HashMap<String, List<String>> listChildData) {
+                         HashMap<String, List<Item>> listChildData) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosititon) {
+    public Object getChild(int groupPosition, int childPosition) {
         return this._listDataChild.get(this._listDataHeader.get(groupPosition))
-                .get(childPosititon);
+                .get(childPosition).getName();
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return childPosition;
+        String key = this._listDataHeader.get(groupPosition);
+        Item value = this._listDataChild.get(key).get(childPosition);
+        return value.getId();
     }
 
     @Override
@@ -51,6 +53,7 @@ public class ClothsAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.lblListItem);
 
         txtListChild.setText(childText);
+        //convertView.setClickable(false);
         return convertView;
     }
 
@@ -89,6 +92,7 @@ public class ClothsAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
+        //convertView.setClickable(false);
 
         return convertView;
     }
@@ -102,4 +106,5 @@ public class ClothsAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
 }
