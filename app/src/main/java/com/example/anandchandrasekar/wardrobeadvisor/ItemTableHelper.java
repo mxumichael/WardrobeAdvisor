@@ -50,7 +50,7 @@ public class ItemTableHelper {
         return numRows;
     }
 
-    public static boolean updateItem(SQLiteDatabase db, Filter updatedFilter) {
+    public static boolean updateItem(SQLiteDatabase db, ItemFilter updatedItemFilter) {
 
         return true;
     }

@@ -21,7 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         ItemTableHelper.createTable(db, context);
-        FilterTableHelper.createTable(db, context);
+        ItemFilterTableHelper.createTable(db, context);
         this.database = db;
     }
 
@@ -31,9 +31,9 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public ArrayList<Filter> getFiltersOfKind(String kind) {
+    public ArrayList<ItemFilter> getFiltersOfKind(String kind) {
         SQLiteDatabase db = this.getWritableDatabase();
         Log.d("", "getting filter of kind "+ kind);
-        return FilterTableHelper.getFiltersOfKind(db, kind);
+        return ItemFilterTableHelper.getFiltersOfKind(db, kind);
     }
 }
