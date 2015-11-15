@@ -9,11 +9,14 @@ public class Filter {
     private String filterKind;
     private String filterImagePath;
 
-    public Filter(int id, String filterName, String filterKind, String filterImagePath) {
+    private int itemId;
+
+    public Filter(int id, String filterName, String filterKind, String filterImagePath, int itemId) {
         this.id = id;
         this.filterName = filterName;
         this.filterKind = filterKind;
         this.filterImagePath = filterImagePath;
+        this.itemId = itemId;
     }
 
     public int getId() {
@@ -46,5 +49,13 @@ public class Filter {
 
     public void setFilterImagePath(String filterImagePath) {
         this.filterImagePath = filterImagePath;
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 }
