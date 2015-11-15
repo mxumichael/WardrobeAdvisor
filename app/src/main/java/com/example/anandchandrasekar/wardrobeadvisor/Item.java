@@ -6,6 +6,10 @@ import java.util.ArrayList;
  * Created by anandchandrasekar on 11/9/15.
  */
 public class Item {
+    public static final int STATE_CLEAN = 0;
+    public static final int STATE_DIRTY = 1;
+    public static final int STATE_INWASH = 2;
+
     private int id;
     private String name;
     private String color;
@@ -15,7 +19,7 @@ public class Item {
     private String brand;
     private String description;
     private String imagePath;
-    private String state;
+    private Integer state;
 
     public Item(int id, String name, String type, String color, String size, String brand, String weather, String description, String image_path) {
         this.id = id;
@@ -27,7 +31,7 @@ public class Item {
         this.weather = weather;
         this.brand = brand;
         this.imagePath = image_path;
-        this.state = "clean";
+        this.state = STATE_CLEAN;
     }
 
     public int getId() {
@@ -78,7 +82,7 @@ public class Item {
         return imagePath;
     }
 
-    public String getState() {
+    public Integer getState() {
         return state;
     }
 

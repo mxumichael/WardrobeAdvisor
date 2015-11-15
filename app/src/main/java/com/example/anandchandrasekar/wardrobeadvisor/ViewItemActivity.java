@@ -40,7 +40,7 @@ public class ViewItemActivity extends AppCompatActivity {
         textView.setText(item.getType());
 
         textView = (TextView)findViewById(R.id.item_state_text);
-        textView.setText(item.getState());
+        textView.setText(item.getState().toString());
 
         textView = (TextView)findViewById(R.id.item_color_text);
         textView.setText(item.getColor());

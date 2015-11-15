@@ -24,6 +24,7 @@ public class Home extends AppCompatActivity {
     ExpandableListView expListView;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class Home extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        dbHelper = new DBHelper(this);
         setupClothsList();
 
 
@@ -87,42 +89,42 @@ public class Home extends AppCompatActivity {
     * Preparing the list data
     */
     private void prepareListData() {
+
+        ArrayList<Item> cleanItems = dbHelper.getItemsByState(Item.STATE_CLEAN);
+        ArrayList<Item> dirtyItems = dbHelper.getItemsByState(Item.STATE_DIRTY);
+        ArrayList<Item> inWashItems = dbHelper.getItemsByState(Item.STATE_INWASH);
+
+        String cleanStr = "Clean (" + cleanItems.size() + ")";
+        String dirtyStr = "Dirty (" + dirtyItems.size() + ")";
+        String inWashStr = "In Wash (" + inWashItems.size() + ")";
+
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
 
         // Adding child data
-        listDataHeader.add("Top 250");
-        listDataHeader.add("Now Showing");
-        listDataHeader.add("Coming Soon..");
+        listDataHeader.add(cleanStr);
+        listDataHeader.add(dirtyStr);
+        listDataHeader.add(inWashStr);
 
-        // Adding child data
-        List<String> top250 = new ArrayList<String>();
-        top250.add("The Shawshank Redemption");
-        top250.add("The Godfather");
-        top250.add("The Godfather: Part II");
-        top250.add("Pulp Fiction");
-        top250.add("The Good, the Bad and the Ugly");
-        top250.add("The Dark Knight");
-        top250.add("12 Angry Men");
+        ArrayList<String> cleanClothes = new ArrayList<>();
+        ArrayList<String> dirtyClothes = new ArrayList<>();
+        ArrayList<String> inWashClothes = new ArrayList<>();
 
-        List<String> nowShowing = new ArrayList<String>();
-        nowShowing.add("The Conjuring");
-        nowShowing.add("Despicable Me 2");
-        nowShowing.add("Turbo");
-        nowShowing.add("Grown Ups 2");
-        nowShowing.add("Red 2");
-        nowShowing.add("The Wolverine");
+        for (int i = 0; i < cleanItems.size(); i++) {
+            cleanClothes.add(cleanItems.get(i).getName());
+        }
 
-        List<String> comingSoon = new ArrayList<String>();
-        comingSoon.add("2 Guns");
-        comingSoon.add("The Smurfs 2");
-        comingSoon.add("The Spectacular Now");
-        comingSoon.add("The Canyons");
-        comingSoon.add("Europa Report");
+        for (int i = 0; i < dirtyItems.size(); i++) {
+            dirtyClothes.add(dirtyItems.get(i).getName());
+        }
 
-        listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), nowShowing);
-        listDataChild.put(listDataHeader.get(2), comingSoon);
+        for (int i = 0; i < inWashItems.size(); i++) {
+            inWashClothes.add(inWashItems.get(i).getName());
+        }
+
+        listDataChild.put(listDataHeader.get(0), cleanClothes); // Header, Child data
+        listDataChild.put(listDataHeader.get(1), dirtyClothes);
+        listDataChild.put(listDataHeader.get(2), inWashClothes);
     }
 
     private void nfcTest() {

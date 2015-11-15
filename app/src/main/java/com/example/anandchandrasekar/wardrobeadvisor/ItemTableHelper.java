@@ -157,4 +157,8 @@ public class ItemTableHelper {
                 "GROUP BY I.item_id");
     }
 
+    public static ArrayList<Item> getItemsByState(SQLiteDatabase database, Integer state) {
+        ArrayList<Item> list = getItemsWithQuery(database, "select * from " + TABLE_NAME + " where " + COLUMN_STATE + " = " + state);
+        return list;
+    }
 }

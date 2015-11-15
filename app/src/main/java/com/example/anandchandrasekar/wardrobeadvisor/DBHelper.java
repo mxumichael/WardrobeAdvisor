@@ -33,12 +33,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public ArrayList<ItemFilter> getFiltersOfKind(String kind) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Log.d("", "getting filter of kind "+ kind);
+        Log.d("", "getting filter of kind " + kind);
         return ItemFilterTableHelper.getFiltersOfKind(db, kind);
     }
 
     public Item getItemById(Integer id) {
         SQLiteDatabase db = this.getReadableDatabase();
         return ItemTableHelper.getItemById(db, id);
+    }
+
+    public ArrayList<Item> getItemsByState(Integer state) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return ItemTableHelper.getItemsByState(db, state);
     }
 }

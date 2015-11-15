@@ -30,7 +30,7 @@
     </RadioGroup>
 
     <TextView
-        android:id="@+id/nfc_test_title"
+        android:id="@+id/nfc_test_title1"
         android:text="Database call below"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
