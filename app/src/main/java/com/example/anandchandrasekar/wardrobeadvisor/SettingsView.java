@@ -52,14 +52,14 @@ public class SettingsView extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.radio_NFC:
                 if (checked) {
-                    Toast.makeText(getApplicationContext(), "radio_NFC checked", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "radio_NFC checked", Toast.LENGTH_LONG).show();
                     editor.putString("ScanMode", "NFC");
                     editor.commit();
                 }
                 break;
             case R.id.radio_QR:
                 if (checked) {
-                    Toast.makeText(getApplicationContext(), "radio_QR checked", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "radio_QR checked", Toast.LENGTH_LONG).show();
                     editor.putString("ScanMode", "QR");
                     editor.commit();
                 }

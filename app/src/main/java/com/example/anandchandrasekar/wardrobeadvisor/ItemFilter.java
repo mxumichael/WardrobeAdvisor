@@ -3,7 +3,7 @@ package com.example.anandchandrasekar.wardrobeadvisor;
 /**
  * Created by anandchandrasekar on 11/9/15.
  */
-public class Filter {
+public class ItemFilter {
     private int id;
     private String filterName;
     private String filterKind;
@@ -11,7 +11,7 @@ public class Filter {
 
     private int itemId;
 
-    public Filter(int id, String filterName, String filterKind, String filterImagePath, int itemId) {
+    public ItemFilter(int id, String filterName, String filterKind, String filterImagePath, int itemId) {
         this.id = id;
         this.filterName = filterName;
         this.filterKind = filterKind;

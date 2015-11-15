@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by anandchandrasekar on 11/8/15.
@@ -69,7 +70,7 @@ public class ItemTableHelper {
         return numRows;
     }
 
-    public static boolean updateItem(SQLiteDatabase db, Filter updatedFilter) {
+    public static boolean updateItem(SQLiteDatabase db, ItemFilter updatedItemFilter) {
 
         return true;
     }
@@ -140,4 +141,20 @@ public class ItemTableHelper {
         insertItem(db, new Item(4, "My Red Shirt", "shirt", "red", "L", "TH", "Casual", "", "ic_launcher"));
         insertItem(db, new Item(5, "My Red Shirt", "shirt", "red", "L", "TH", "Casual", "", "ic_launcher"));
     }
+
+    public static List<Item> getItemListForFilterIdList(SQLiteDatabase database, List<String> filterIds) {
+        // TODO: Change to a StringBuilder if you care about efficiency
+        String formattedFilterIds = "";
+        for (String filterId : filterIds) {
+            formattedFilterIds = formattedFilterIds + filterId + ", ";
+        }
+        // Strip off the extra ", "
+        formattedFilterIds = formattedFilterIds.substring(0, formattedFilterIds.length() - 2);
+
+        return getItemsWithQuery(database, "SELECT * FROM Item I\n" +
+                "JOIN Item_Filter IF ON I.item_id = IF.item_id\n" +
+                "WHERE IF.filter_id IN (" + formattedFilterIds + ")\n" +
+                "GROUP BY I.item_id");
+    }
+
 }

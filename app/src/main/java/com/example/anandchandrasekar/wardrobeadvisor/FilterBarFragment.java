@@ -83,10 +83,10 @@ public class FilterBarFragment extends Fragment {
         filterTextList = new ArrayList<String>();
         filterImageList = new ArrayList<String>();
 
-        //load the filters from the database
-        ArrayList<Filter> filters = dbHelper.getFiltersOfKind(filterKind);
-        for(Filter currFilter: filters) {
-            filterTextList.add(currFilter.getFilterName());
+        //load the itemFilters from the database
+        ArrayList<ItemFilter> itemFilters = dbHelper.getFiltersOfKind(filterKind);
+        for(ItemFilter currItemFilter : itemFilters) {
+            filterTextList.add(currItemFilter.getFilterName());
         }
 
         //right now using static entries
