@@ -2,8 +2,10 @@ package com.example.anandchandrasekar.wardrobeadvisor;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -11,21 +13,19 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
-public class nfc_test_page extends AppCompatActivity {
+public class Scan extends AppCompatActivity {
 
     private NfcAdapter mNfcAdapter;
     public static final String MIME_TEXT_PLAIN = "text/plain";
@@ -34,31 +34,70 @@ public class nfc_test_page extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.nfc_test_page);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        setContentView(R.layout.scan_view);
 
         nfcTest();
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        RadioButton radio_button_dirty = (RadioButton) findViewById(R.id.radio_dirty);
+        RadioButton radio_button_clean = (RadioButton) findViewById(R.id.radio_clean);
+        RadioButton radio_button_in_wash = (RadioButton) findViewById(R.id.radio_in_wash);
+
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        String destination = sharedPref.getString("destination", "dirty");
+
+        if (destination.equals("dirty")) {
+            radio_button_dirty.setChecked(true);
+        } else if (destination.equals("clean")) {
+            radio_button_clean.setChecked(true);
+        } else if (destination.equals("in_wash")) {
+            radio_button_in_wash.setChecked(true);
+        } else {
+            Toast.makeText(getApplicationContext(), "un-anticipated destination:" + destination, Toast.LENGTH_LONG).show();
+        }
+
+
     }
 
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        // Check which radio button was clicked
+        switch (view.getId()) {
+            case R.id.radio_dirty:
+                if (checked) {
+                    Toast.makeText(getApplicationContext(), "radio_dirty checked", Toast.LENGTH_SHORT).show();
+                    editor.putString("destination", "dirty");
+                    editor.commit();
+                }
+                break;
+            case R.id.radio_clean:
+                if (checked) {
+                    Toast.makeText(getApplicationContext(), "radio_clean checked", Toast.LENGTH_SHORT).show();
+                    editor.putString("destination", "clean");
+                    editor.commit();
+                }
+                break;
+            case R.id.radio_in_wash:
+                if (checked) {
+                    Toast.makeText(getApplicationContext(), "radio_in_wash checked", Toast.LENGTH_SHORT).show();
+                    editor.putString("destination", "in_wash");
+                    editor.commit();
+                }
+                break;
+        }
+    }
 
     private void nfcTest() {
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         String is_nfc_ok = nfcSupportCheck();
-        if (is_nfc_ok.equals("FAIL")){
+        if (is_nfc_ok.equals("FAIL")) {
             return;
         }
-        setContentView(R.layout.nfc_test_page);
+        setContentView(R.layout.scan_view);
         getIntent();
 
     }
@@ -74,13 +113,14 @@ public class nfc_test_page extends AppCompatActivity {
         }
 
         if (!mNfcAdapter.isEnabled()) {
-            Toast.makeText(this,"NFC is disabled.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "NFC is disabled.", Toast.LENGTH_LONG).show();
             return "FAIL";
         } else {
-            Toast.makeText(this,"NFC is OK.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "NFC is OK.", Toast.LENGTH_SHORT).show();
         }
         return "OK";
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -90,9 +130,9 @@ public class nfc_test_page extends AppCompatActivity {
          * an IllegalStateException is thrown.
          */
         String is_nfc_ok = nfcSupportCheck();
-        if (is_nfc_ok.equals("FAIL")){
+        if (is_nfc_ok.equals("FAIL")) {
             //do nothing
-        }else {
+        } else {
             setupForegroundDispatch(this, mNfcAdapter);
         }
     }
@@ -103,9 +143,9 @@ public class nfc_test_page extends AppCompatActivity {
          * Call this before onPause, otherwise an IllegalArgumentException is thrown as well.
          */
         String is_nfc_ok = nfcSupportCheck();
-        if (is_nfc_ok.equals("FAIL")){
+        if (is_nfc_ok.equals("FAIL")) {
             //do nothing
-        }else {
+        } else {
             setupForegroundDispatch(this, mNfcAdapter);
         }
 
@@ -126,7 +166,7 @@ public class nfc_test_page extends AppCompatActivity {
 
     private void handleIntent(Intent intent) {
         /*this part gets called whenever an NFC is detected. I think this calls the Reader to actually read the information*/
-        Toast.makeText(this,"handleIntent has been called", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "handleIntent has been called", Toast.LENGTH_LONG).show();
 
         String action = intent.getAction();
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
@@ -138,9 +178,9 @@ public class nfc_test_page extends AppCompatActivity {
                 new NdefReaderTask().execute(tag);
 
             } else {
-               // Log.d(TAG, "Wrong mime type: " + type);
+                // Log.d(TAG, "Wrong mime type: " + type);
                 CharSequence temp = "Wrong mime type: " + type;
-                Toast.makeText(this,temp, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, temp, Toast.LENGTH_LONG).show();
 
             }
         } else if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
@@ -161,7 +201,7 @@ public class nfc_test_page extends AppCompatActivity {
 
     /**
      * @param activity The corresponding {@link Activity} requesting the foreground dispatch.
-     * @param adapter The {@link NfcAdapter} used for the foreground dispatch.
+     * @param adapter  The {@link NfcAdapter} used for the foreground dispatch.
      */
     public static void setupForegroundDispatch(final Activity activity, NfcAdapter adapter) {
         final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
@@ -209,21 +249,22 @@ public class nfc_test_page extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent i = new Intent(getApplicationContext(), SettingsView.class);
-            i.putExtra("option",R.id.action_settings);
+            i.putExtra("option", R.id.action_settings);
             startActivity(i);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
     /**
      * Background task for reading the data. Do not block the UI thread while reading.
      *
      * @author Ralf Wondratschek
-     *
      */
     private class NdefReaderTask extends AsyncTask<Tag, Void, String> {
         TextView mTextView;
+
         @Override
         protected String doInBackground(Tag... params) {
             Tag tag = params[0];
@@ -278,10 +319,13 @@ public class nfc_test_page extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            mTextView = (TextView) findViewById(R.id.nfc_test);
+            mTextView = (TextView) findViewById(R.id.database_call);
+            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+            String destination = sharedPref.getString("destination", "dirty");
 
             if (result != null) {
-                mTextView.setText("Read content: " + result);
+                //mTextView.setText("Read content: " + result);
+                mTextView.setText("update itemTable set state ="+destination+" where itemId =" + result);
             }
         }
     }

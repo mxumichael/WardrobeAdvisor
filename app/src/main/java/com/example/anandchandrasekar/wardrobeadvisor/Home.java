@@ -1,6 +1,5 @@
 package com.example.anandchandrasekar.wardrobeadvisor;
 
-import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
@@ -11,10 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -44,7 +41,7 @@ public class Home extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                Intent i = new Intent(getApplicationContext(), nfc_test_page.class);
+                Intent i = new Intent(getApplicationContext(), Scan.class);
                 startActivity(i);
             }
         });
@@ -125,7 +122,7 @@ public class Home extends AppCompatActivity {
         if (is_nfc_ok.equals("FAIL")) {
             return;
         }
-        setContentView(R.layout.nfc_test_page);
+        setContentView(R.layout.scan_view);
         getIntent();
 
     }
