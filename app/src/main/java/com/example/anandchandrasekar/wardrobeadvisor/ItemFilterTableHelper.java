@@ -94,7 +94,19 @@ public class ItemFilterTableHelper {
     }
 
     public static ArrayList<ItemFilter> getFiltersOfKind(SQLiteDatabase database, String kind) {
-        return getFiltersWithQuery(database, "select * from " + TABLE_NAME + " where " + COLUMN_FILTER_KIND + " = '" + kind + "'");
+        return getFiltersWithQuery(database, "select * from " + TABLE_NAME + " where " + COLUMN_FILTER_KIND + " = '" + kind + "'"
+                + " GROUP BY " + COLUMN_FILTER_ID);
+    }
+
+    public static ItemFilter getItemFilterForFilterId(SQLiteDatabase database, String filterId) {
+        ArrayList<ItemFilter> filtersWithQuery = getFiltersWithQuery(database, "SELECT * FROM ITEM_FILTER\n" +
+                "WHERE FILTER_ID = '" + filterId + "'\n" +
+                "GROUP BY FILTER_ID;");
+        if (filtersWithQuery != null && filtersWithQuery.size() > 0) {
+            return filtersWithQuery.get(0);
+        } else {
+            return null;
+        }
     }
 
     public static void loadDefaultFilters(SQLiteDatabase db, Context context) {
