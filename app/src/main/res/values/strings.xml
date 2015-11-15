@@ -11,4 +11,5 @@
         <item>QR Codes</item>
     </string-array>
     <string name="scanning_mode">Scanning Mode</string>
+    <string name="title_activity_view_item">View Item</string>
 </resources>
