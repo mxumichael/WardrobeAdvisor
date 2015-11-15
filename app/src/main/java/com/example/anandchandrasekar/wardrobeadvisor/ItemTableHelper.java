@@ -136,10 +136,6 @@ public class ItemTableHelper {
             String image = jsonObject.optString("image").toString();
             insertItem(db, new Item(id, name, type, color, size, brand, weather, desc, image));
         }
-        insertItem(db, new Item(2, "My Red Shirt", "shirt", "red", "L", "TH", "Casual", "", "ic_launcher"));
-        insertItem(db, new Item(3, "My Red Shirt", "shirt", "red", "L", "TH", "Casual", "", "ic_launcher"));
-        insertItem(db, new Item(4, "My Red Shirt", "shirt", "red", "L", "TH", "Casual", "", "ic_launcher"));
-        insertItem(db, new Item(5, "My Red Shirt", "shirt", "red", "L", "TH", "Casual", "", "ic_launcher"));
     }
 
     public static List<Item> getItemListForFilterIdList(SQLiteDatabase database, List<String> filterIds) {

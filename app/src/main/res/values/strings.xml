@@ -20,12 +20,100 @@
                     "id":"1",
                     "name":\"My Fav Blue Shirt\",
                     "type":"Shirt",
-                    "color":"blue,
+                    "color":"blue",
                     "size":"L",
                     "brand":"USPolo",
                     "weather":"Casual",
-                    "desc":"abc",
+                    "desc":\"The one that does not fade or wrinkle\",
                     "image":"blue_polo_shirt"
+                },
+                {
+                    "id":"2",
+                    "name":\"The Big Red Jacket\",
+                    "type":"Jacket",
+                    "color":"red",
+                    "size":"L",
+                    "brand":"NorthFace",
+                    "weather":"Rainy",
+                    "desc":\"Red and gray with a front pocket\",
+                    "image":"red_jacket"
+                },
+                {
+                    "id":"3",
+                    "name":\"Funny White Tee\",
+                    "type":"Shirt",
+                    "color":"white",
+                    "size":"L",
+                    "brand":"ColdStone",
+                    "weather":"Casual",
+                    "desc":\"The one with the ice cream cone\",
+                    "image":"white_icecream_t_shirt"
+                },
+                {
+                    "id":"4",
+                    "name":\"Orange Sweater\",
+                    "type":"Sweater",
+                    "color":"orange",
+                    "size":"L",
+                    "brand":"Burberry",
+                    "weather":"Winter",
+                    "desc":\"Crew neck knitted\",
+                    "image":"orange_sweater"
+                },
+                {
+                    "id":"5",
+                    "name":\"My New Black Blazer\",
+                    "type":"Coat",
+                    "color":"black",
+                    "size":"L",
+                    "brand":"Armani",
+                    "weather":"Formal",
+                    "desc":\"Single button, Slim fit\",
+                    "image":"black_blazer"
+                },
+                {
+                    "id":"6",
+                    "name":\"Biking Shorts\",
+                    "type":"Shorts",
+                    "color":"black",
+                    "size":"L",
+                    "brand":"Nike",
+                    "weather":"Sport",
+                    "desc":\"Ordered on Amazon\",
+                    "image":"biking_shorts"
+                },
+                {
+                    "id":"7",
+                    "name":\"Black Checked Shirt\",
+                    "type":"Shirt",
+                    "color":"black",
+                    "size":"L",
+                    "brand":"TH",
+                    "weather":"Formal",
+                    "desc":\"Full sleeves\",
+                    "image":"black_check_shirt"
+                },
+                {
+                    "id":"8",
+                    "name":\"My denims\",
+                    "type":"Pants",
+                    "color":"Blue",
+                    "size":"32-30",
+                    "brand":"Levis",
+                    "weather":"Casual",
+                    "desc":\"Good old pair of jeans\",
+                    "image":"blue_jeans"
+                },
+                {
+                    "id":"9",
+                    "name":\"Socks with the Polka Dots\",
+                    "type":"Socks",
+                    "color":"Black",
+                    "size":"Free",
+                    "brand":"AllenSolly",
+                    "weather":"Casual",
+                    "desc":\"Jo\'s gift\",
+                    "image":"black_polka_socks"
                 }
             ]
         }

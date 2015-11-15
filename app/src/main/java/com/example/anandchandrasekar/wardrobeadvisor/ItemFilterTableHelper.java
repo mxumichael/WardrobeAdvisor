@@ -21,6 +21,12 @@ public class ItemFilterTableHelper {
     private static final String COLUMN_FILTER_KIND = "filter_kind";
     private static final String COLUMN_FILTER_IMAGE_PATH = "filter_image_path";
 
+    private static final String FILTER_COLOR = "filter_kind_color";
+    private static final String FILTER_STATE = "filter_kind_state";
+    private static final String FILTER_TYPE = "filter_kind_type";
+    private static final String FILTER_WEATHER = "filter_kind_weather";
+
+    private static int filterCount = 0;
 
     public static void createTable(SQLiteDatabase database, Context context) {
         database.execSQL("CREATE TABLE " + TABLE_NAME + " (" +
@@ -85,6 +91,18 @@ public class ItemFilterTableHelper {
         return itemFilters;
     }
 
+    private static int getFilterIdForQuery(SQLiteDatabase database, String query) {
+        Cursor res = database.rawQuery(query, null);
+        res.moveToFirst();
+
+        if(res.isAfterLast() == true) {
+            return -1;
+        }
+        else {
+            return res.getInt(res.getColumnIndex(COLUMN_FILTER_ID));
+        }
+    }
+
     public static ArrayList<ItemFilter> getAllFilters(SQLiteDatabase database) {
         return getFiltersWithQuery(database, "select * from " + TABLE_NAME);
     }
@@ -110,14 +128,55 @@ public class ItemFilterTableHelper {
     }
 
     public static void loadDefaultFilters(SQLiteDatabase db, Context context) {
-        insertFilter(db, new ItemFilter(1, "Red", context.getResources().getString(R.string.filter_kind_color), null, 1));
-        insertFilter(db, new ItemFilter(2, "Blue", context.getResources().getString(R.string.filter_kind_color), null, 1));
-        insertFilter(db, new ItemFilter(3, "Green", context.getResources().getString(R.string.filter_kind_color), null, 1));
-        insertFilter(db, new ItemFilter(4, "Shirt", context.getResources().getString(R.string.filter_kind_type), null, 1));
-        insertFilter(db, new ItemFilter(5, "Shorts", context.getResources().getString(R.string.filter_kind_type), null, 1));
-        insertFilter(db, new ItemFilter(6, "Blazer", context.getResources().getString(R.string.filter_kind_type), null, 1));
-        insertFilter(db, new ItemFilter(7, "Sunny", context.getResources().getString(R.string.filter_kind_weather), null, 1));
-        insertFilter(db, new ItemFilter(8, "Rainy", context.getResources().getString(R.string.filter_kind_weather), null, 1));
-        insertFilter(db, new ItemFilter(9, "Cold", context.getResources().getString(R.string.filter_kind_weather), null, 1));
+        ArrayList<Item> allItems = ItemTableHelper.getAllItems(db);
+        for(int i = 0; i < allItems.size(); i++) {
+            Item item = allItems.get(i);
+
+            String color = item.getColor().toLowerCase();
+            String queryString = "SELECT * FROM " + TABLE_NAME + " WHERE " +
+                                    COLUMN_FILTER_KIND + " = '" + FILTER_COLOR + "' AND " +
+                                    COLUMN_FILTER_NAME + " = '" + color + "'";
+            int filterId = getFilterIdForQuery(db, queryString);
+            if(filterId == -1)
+                filterId = ++filterCount;
+            insertFilter(db, new ItemFilter(filterId, color, FILTER_COLOR, null, item.getId()));
+
+            String type = item.getType().toLowerCase();
+            queryString = "SELECT * FROM " + TABLE_NAME + " WHERE " +
+                    COLUMN_FILTER_KIND + " = '" + FILTER_TYPE + "' AND " +
+                    COLUMN_FILTER_NAME + " = '" + type + "'";
+            filterId = getFilterIdForQuery(db, queryString);
+            if(filterId == -1)
+                filterId = ++filterCount;
+            insertFilter(db, new ItemFilter(filterId, type, FILTER_TYPE, null, item.getId()));
+
+            String weather = item.getWeather().toLowerCase();
+            queryString = "SELECT * FROM " + TABLE_NAME + " WHERE " +
+                    COLUMN_FILTER_KIND + " = '" + FILTER_WEATHER + "' AND " +
+                    COLUMN_FILTER_NAME + " = '" + weather + "'";
+            filterId = getFilterIdForQuery(db, queryString);
+            if(filterId == -1)
+                filterId = ++filterCount;
+            insertFilter(db, new ItemFilter(filterId, weather, FILTER_WEATHER, null, item.getId()));
+
+            String state = item.getState().toString();
+            queryString = "SELECT * FROM " + TABLE_NAME + " WHERE " +
+                    COLUMN_FILTER_KIND + " = '" + FILTER_STATE + "' AND " +
+                    COLUMN_FILTER_NAME + " = '" + state +"'";
+            filterId = getFilterIdForQuery(db, queryString);
+            if(filterId == -1)
+                filterId = ++filterCount;
+            insertFilter(db, new ItemFilter(filterId, state, FILTER_STATE, null, item.getId()));
+        }
+
+//        insertFilter(db, new ItemFilter(1, "Red", context.getResources().getString(R.string.filter_kind_color), null, 1));
+//        insertFilter(db, new ItemFilter(2, "Blue", context.getResources().getString(R.string.filter_kind_color), null, 1));
+//        insertFilter(db, new ItemFilter(3, "Green", context.getResources().getString(R.string.filter_kind_color), null, 1));
+//        insertFilter(db, new ItemFilter(4, "Shirt", context.getResources().getString(R.string.filter_kind_type), null, 1));
+//        insertFilter(db, new ItemFilter(5, "Shorts", context.getResources().getString(R.string.filter_kind_type), null, 1));
+//        insertFilter(db, new ItemFilter(6, "Blazer", context.getResources().getString(R.string.filter_kind_type), null, 1));
+//        insertFilter(db, new ItemFilter(7, "Sunny", context.getResources().getString(R.string.filter_kind_weather), null, 1));
+//        insertFilter(db, new ItemFilter(8, "Rainy", context.getResources().getString(R.string.filter_kind_weather), null, 1));
+//        insertFilter(db, new ItemFilter(9, "Cold", context.getResources().getString(R.string.filter_kind_weather), null, 1));
     }
 }
