@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by anandchandrasekar on 11/8/15.
@@ -80,6 +81,21 @@ public class ItemTableHelper {
 
     public static ArrayList<Item> getItemById(SQLiteDatabase database, int id) {
         return getItemsWithQuery(database, "select * from " + TABLE_NAME + " where " + COLUMN_ID + " = " + id);
+    }
+
+    public static List<Item> getItemListForFilterIdList(SQLiteDatabase database, List<String> filterIds) {
+        // TODO: Change to a StringBuilder if you care about efficiency
+        String formattedFilterIds = "";
+        for (String filterId : filterIds) {
+            formattedFilterIds = formattedFilterIds + filterId + ", ";
+        }
+        // Strip off the extra ", "
+        formattedFilterIds = formattedFilterIds.substring(0, formattedFilterIds.length() - 2);
+
+        return getItemsWithQuery(database, "SELECT * FROM Item I\n" +
+                "JOIN Item_Filter IF ON I.item_id = IF.item_id\n" +
+                "WHERE IF.filter_id IN (" + formattedFilterIds + ")\n" +
+                "GROUP BY I.item_id");
     }
 
     public static void loadDefaultFilters(SQLiteDatabase db, Context context) {
