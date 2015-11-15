@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.anandchandrasekar.wardrobeadvisor" >
+    package="com.example.anandchandrasekar.wardrobeadvisor" > <!-- NFC permissions version 10 supports read/write -->
+    <uses-sdk android:minSdkVersion="10" />
 
-    <!--    android NFC manifest enteries begin    -->
+    <!-- android NFC manifest enteries begin -->
     <!-- NFC permissions -->
     <uses-permission android:name="android.permission.NFC" />
-    <!-- NFC permissions version 10 supports read/write-->
-    <uses-sdk android:minSdkVersion="10"/>
     <!-- only displays in app store if device supports NFC -->
-    <uses-feature android:name="android.hardware.nfc" android:required="true" />
-    <!--    android NFC manifest enteries end    -->
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
 
+    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- android NFC manifest enteries end -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,13 +29,15 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
-            <!-- more android NFC stuff, to be placed within intent-filter -->
-               <!-- <action android:name="android.nfc.action.TECH_DISCOVERED"/> -->
-                 <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
-                 <category android:name="android.intent.category.DEFAULT"/>
-                 <data android:mimeType="text/plain" />
+
+                <!-- more android NFC stuff, to be placed within intent-filter -->
+                <!-- <action android:name="android.nfc.action.TECH_DISCOVERED"/> -->
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
                 <!-- end of android NFC stuff, to be placed within intent-filter -->
 
             </intent-filter>
@@ -43,7 +48,11 @@
         </activity>
         <activity android:name=".SettingsView" >
         </activity>
+        <activity
+            android:name=".ViewItemActivity"
+            android:label="@string/title_activity_view_item"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
-
 
 </manifest>

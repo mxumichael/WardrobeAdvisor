@@ -21,6 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         FilterTableHelper.createTable(db, context);
+        ItemTableHelper.createTable(db, context);
         this.database = db;
     }
 
