@@ -157,4 +157,11 @@ public class ItemTableHelper {
         ArrayList<Item> list = getItemsWithQuery(database, "select * from " + TABLE_NAME + " where " + COLUMN_STATE + " = " + state);
         return list;
     }
+
+    public static boolean updateItemState(SQLiteDatabase db, Integer id, Integer new_state) {
+        String update_query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_STATE + " = " + new_state
+                        + " WHERE " + COLUMN_ID + " = " + id;
+        db.execSQL(update_query);
+        return true;
+    }
 }

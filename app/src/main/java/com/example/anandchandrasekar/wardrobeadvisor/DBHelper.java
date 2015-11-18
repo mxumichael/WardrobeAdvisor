@@ -46,4 +46,9 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         return ItemTableHelper.getItemsByState(db, state);
     }
+
+    public boolean updateItemState(Integer id, Integer new_state) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return ItemTableHelper.updateItemState(db, id, new_state);
+    }
 }
