@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 public class ViewItemActivity extends AppCompatActivity {
 
+    private DBHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +28,7 @@ public class ViewItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         long id = intent.getLongExtra("item_id", -1);
 
-        DBHelper dbHelper = new DBHelper(this);
+        dbHelper = new DBHelper(this);
         Item item = dbHelper.getItemById((int)id);
 
         ImageView img  = (ImageView)findViewById(R.id.item_image);
@@ -54,5 +56,39 @@ public class ViewItemActivity extends AppCompatActivity {
         textView = (TextView)findViewById(R.id.item_weather_text);
         textView.setText(item.getWeather());
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        long id = intent.getLongExtra("item_id", -1);
+
+        Item item = dbHelper.getItemById((int)id);
+
+        ImageView img  = (ImageView)findViewById(R.id.item_image);
+        int imgId = getResources().getIdentifier(item.getImagePath(), "drawable", getApplicationContext().getPackageName());
+        img.setImageResource(imgId);
+
+        TextView textView = (TextView)findViewById(R.id.item_name_text);
+        textView.setText(item.getName());
+
+        textView = (TextView)findViewById(R.id.item_type_text);
+        textView.setText(item.getType());
+
+        textView = (TextView)findViewById(R.id.item_state_text);
+        textView.setText(item.getState().toString());
+
+        textView = (TextView)findViewById(R.id.item_color_text);
+        textView.setText(item.getColor());
+
+        textView = (TextView)findViewById(R.id.item_size_text);
+        textView.setText(item.getSize());
+
+        textView = (TextView)findViewById(R.id.item_brand_text);
+        textView.setText(item.getBrand());
+
+        textView = (TextView)findViewById(R.id.item_weather_text);
+        textView.setText(item.getWeather());
     }
 }
