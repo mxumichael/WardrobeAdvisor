@@ -34,6 +34,19 @@ public class Item {
         this.state = STATE_CLEAN;
     }
 
+    public Item(int id, String name, String type, String color, String size, String brand, String weather, String description, String image_path, Integer state) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.color = color;
+        this.size = size;
+        this.type = type;
+        this.weather = weather;
+        this.brand = brand;
+        this.imagePath = image_path;
+        this.state = state;
+    }
+
     public int getId() {
         return id;
     }
@@ -84,6 +97,18 @@ public class Item {
 
     public Integer getState() {
         return state;
+    }
+
+    public String getStateName() {
+        switch (state){
+            case STATE_CLEAN:
+                return "Clean";
+            case STATE_DIRTY:
+                return "Dirty";
+            case STATE_INWASH:
+                return "In Wash";
+        }
+        return state.toString();
     }
 
 }

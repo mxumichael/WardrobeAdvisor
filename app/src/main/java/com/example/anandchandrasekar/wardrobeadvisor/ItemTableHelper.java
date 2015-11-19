@@ -93,7 +93,8 @@ public class ItemTableHelper {
                     res.getString(res.getColumnIndex(COLUMN_BRAND)),
                     res.getString(res.getColumnIndex(COLUMN_WEATHER)),
                     res.getString(res.getColumnIndex(COLUMN_DESC)),
-                    res.getString(res.getColumnIndex(COLUMN_IMAGE)));
+                    res.getString(res.getColumnIndex(COLUMN_IMAGE)),
+                    res.getInt(res.getColumnIndex(COLUMN_STATE)));
             items.add(newItem);
             res.moveToNext();
         }
