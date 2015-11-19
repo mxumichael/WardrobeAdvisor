@@ -20,7 +20,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        FilterTableHelper.createTable(db, context);
+        ItemTableHelper.createTable(db, context);
+        ItemFilterTableHelper.createTable(db, context);
         this.database = db;
     }
 
@@ -30,8 +31,24 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public ArrayList<Filter> getFiltersOfKind(String kind) {
-        Log.d("", "getting filter of kind "+ kind);
-        return FilterTableHelper.getFiltersOfKind(this.database, kind);
+    public ArrayList<ItemFilter> getFiltersOfKind(String kind) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Log.d("", "getting filter of kind " + kind);
+        return ItemFilterTableHelper.getFiltersOfKind(db, kind);
+    }
+
+    public Item getItemById(Integer id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return ItemTableHelper.getItemById(db, id);
+    }
+
+    public ArrayList<Item> getItemsByState(Integer state) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return ItemTableHelper.getItemsByState(db, state);
+    }
+
+    public boolean updateItemState(Integer id, Integer new_state) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return ItemTableHelper.updateItemState(db, id, new_state);
     }
 }

@@ -3,17 +3,20 @@ package com.example.anandchandrasekar.wardrobeadvisor;
 /**
  * Created by anandchandrasekar on 11/9/15.
  */
-public class Filter {
+public class ItemFilter {
     private int id;
     private String filterName;
     private String filterKind;
     private String filterImagePath;
 
-    public Filter(int id, String filterName, String filterKind, String filterImagePath) {
+    private int itemId;
+
+    public ItemFilter(int id, String filterName, String filterKind, String filterImagePath, int itemId) {
         this.id = id;
         this.filterName = filterName;
         this.filterKind = filterKind;
         this.filterImagePath = filterImagePath;
+        this.itemId = itemId;
     }
 
     public int getId() {
@@ -55,5 +58,12 @@ public class Filter {
         if (!(other instanceof Filter))return false;
         Filter otherFilter = (Filter)other;
         return (otherFilter.getId() == getId());
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 }
