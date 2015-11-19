@@ -1,0 +1,36 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.anandchandrasekar.wardrobeadvisor.AllFiltersFragment">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <Button
+            android:id="@+id/prevFilterButton"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.10"
+            android:text="Prev"
+            android:textSize="6sp"/>
+
+        <android.support.v4.view.ViewPager
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/filterViewPager"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.80"/>
+
+        <Button
+            android:id="@+id/nextFilterButton"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.10"
+            android:text="Next"
+            android:textSize="6sp"/>
+    </LinearLayout>
+
+</FrameLayout>

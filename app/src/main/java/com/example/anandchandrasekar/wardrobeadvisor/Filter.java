@@ -47,4 +47,13 @@ public class Filter {
     public void setFilterImagePath(String filterImagePath) {
         this.filterImagePath = filterImagePath;
     }
+
+    @Override
+    public boolean equals(Object other){
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof Filter))return false;
+        Filter otherFilter = (Filter)other;
+        return (otherFilter.getId() == getId());
+    }
 }

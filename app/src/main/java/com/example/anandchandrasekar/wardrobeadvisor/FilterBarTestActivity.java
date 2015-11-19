@@ -18,14 +18,11 @@ package com.example.anandchandrasekar.wardrobeadvisor;
  */
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.View;
-import android.widget.Button;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 /**
  * Demonstrates a "screen-slide" animation using a {@link ViewPager}. Because {@link ViewPager}
@@ -37,127 +34,74 @@ import android.widget.Button;
  * reverse animation is played when the user presses the "previous" button.</p>
  *
  */
-public class FilterBarTestActivity extends FragmentActivity {
+public class FilterBarTestActivity extends FragmentActivity implements FilterKindFragment.FilterSelectedListener, SelectedFiltersFragment.SelectedFiltersFragmentInteractionListener {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 3;
 
-    private ViewPager filterPager;
-    private PagerAdapter filterPagerAdapter;
-    private Button prevFilterPageButton;
-    private Button nextFilterPageButton;
+
+    private ArrayList<Filter> currentlySelectedFilters;
+
+
+    private SelectedFiltersFragment selectedFiltersFragment;
+    private AllFiltersFragment allFiltersFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_bar_test);
 
-        // Instantiate a ViewPager and a PagerAdapter.
-        filterPager = (ViewPager) findViewById(R.id.filterViewPager);
-        filterPagerAdapter = new FilterPagerAdapter(getSupportFragmentManager());
-        filterPager.setAdapter(filterPagerAdapter);
-        filterPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                // When changing pages, reset the action bar actions since they are dependent
-                // on which page is currently active. An alternative approach is to have each
-                // fragment expose actions itself (rather than the activity exposing actions),
-                // but for simplicity, the activity provides the actions in this sample.
-                invalidateOptionsMenu();
-                updatePagerNavigationButtons(position);
-            }
-        });
+        selectedFiltersFragment = (SelectedFiltersFragment) getSupportFragmentManager().findFragmentById(R.id.selectedFiltersFragment);
+        allFiltersFragment = (AllFiltersFragment) getSupportFragmentManager().findFragmentById(R.id.allFiltersFragment);
 
-        prevFilterPageButton = (Button) findViewById(R.id.prevFilterButton);
-        prevFilterPageButton.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                filterPager.setCurrentItem(filterPager.getCurrentItem()-1, true);
-                updatePagerNavigationButtons(filterPager.getCurrentItem());
-            }
-        });
-        nextFilterPageButton = (Button) findViewById(R.id.nextFilterButton);
-        nextFilterPageButton.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                filterPager.setCurrentItem(filterPager.getCurrentItem()+1, true);
-                updatePagerNavigationButtons(filterPager.getCurrentItem());
-            }
-        });
-        updatePagerNavigationButtons(0);
-    }
+        currentlySelectedFilters = new ArrayList<Filter>();
 
-    private void updatePagerNavigationButtons(int currentPageNumber) {
-        nextFilterPageButton.setEnabled(true);
-        prevFilterPageButton.setEnabled(true);
-        if(currentPageNumber == NUM_PAGES-1) {
-            nextFilterPageButton.setEnabled(false);
-        } else if (currentPageNumber == 0) {
-            prevFilterPageButton.setEnabled(false);
-        }
-    }
-
-    private class FilterPagerAdapter extends FragmentStatePagerAdapter {
-        public FilterPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch(position) {
-                case 0: return FilterBarFragment.create(getString(R.string.filter_kind_color));
-                case 1: return FilterBarFragment.create(getString(R.string.filter_kind_weather));
-                case 2: return FilterBarFragment.create(getString(R.string.filter_kind_type));
-            }
-
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
-        }
 
     }
 
-    //    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        super.onCreateOptionsMenu(menu);
-//        getMenuInflater().inflate(R.menu.activity_screen_slide, menu);
-//
-//        menu.findItem(R.id.action_previous).setEnabled(mPager.getCurrentItem() > 0);
-//
-//        // Add either a "next" or "finish" button to the action bar, depending on which page
-//        // is currently selected.
-//        MenuItem item = menu.add(Menu.NONE, R.id.action_next, Menu.NONE,
-//                (mPager.getCurrentItem() == mPagerAdapter.getCount() - 1)
-//                        ? R.string.action_finish
-//                        : R.string.action_next);
-//        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-//        return true;
-//    }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                // Navigate "up" the demo structure to the launchpad activity.
-//                // See http://developer.android.com/design/patterns/navigation.html for more.
-//                NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
-//                return true;
-//
-//            case R.id.action_previous:
-//                // Go to the previous step in the wizard. If there is no previous step,
-//                // setCurrentItem will do nothing.
-//                mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-//                return true;
-//
-//            case R.id.action_next:
-//                // Advance to the next step in the wizard. If there is no next step, setCurrentItem
-//                // will do nothing.
-//                mPager.setCurrentItem(mPager.getCurrentItem() + 1);
-//                return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    //filter bar fragment listener methods
+    @Override
+    public void addFilter(Filter filter) {
+        Log.d("", "ADDING FILTER: " + filter.getId());
+        currentlySelectedFilters.add(filter);
+        selectedFiltersFragment.layoutSelectedFilters();
+        allFiltersFragment.updateSelectedFilters();
+        printFilters();
+    }
+
+    @Override
+    public void removeFilter(Filter filter) {
+        Log.d("", "REMOVING FILTER: " + filter.getId());
+        currentlySelectedFilters.remove(filter);
+        selectedFiltersFragment.layoutSelectedFilters();
+        allFiltersFragment.updateSelectedFilters();
+        printFilters();
+    }
+
+    //selected filters bar fragment listener methods
+    @Override
+    public ArrayList<Filter> getCurrentlySelectedFilters() {
+        return this.currentlySelectedFilters;
+    }
+
+    @Override
+    public void removeSelectedFilter(Filter filter) {
+        Log.d("", "REMOVING SELECTED FILTER: " + filter.getId());
+        currentlySelectedFilters.remove(filter);
+        selectedFiltersFragment.layoutSelectedFilters();
+        allFiltersFragment.updateSelectedFilters();
+        printFilters();
+    }
+
+    public void printFilters() {
+        Log.d("sdf","PRINTING");
+        for(int i=0; i<currentlySelectedFilters.size(); i++) {
+            Log.d("sdf", currentlySelectedFilters.get(i).getFilterName() + " : " + currentlySelectedFilters.get(i).getId());
+        }
+    }
+
+
+
 }
