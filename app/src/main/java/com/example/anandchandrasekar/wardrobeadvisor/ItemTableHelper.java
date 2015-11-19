@@ -159,6 +159,17 @@ public class ItemTableHelper {
         return list;
     }
 
+    public static int updateItemsFromStateToState(SQLiteDatabase database, Integer original_state, Integer new_state) {
+        String where_clause = " WHERE " + COLUMN_STATE + " = " + new_state ;
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_STATE, new_state);
+
+        int affected = database.update(TABLE_NAME,values,where_clause,null);
+
+        return affected;
+    }
+
+
     public static boolean updateItemState(SQLiteDatabase db, Integer id, Integer new_state) {
         String update_query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_STATE + " = " + new_state
                         + " WHERE " + COLUMN_ID + " = " + id;
