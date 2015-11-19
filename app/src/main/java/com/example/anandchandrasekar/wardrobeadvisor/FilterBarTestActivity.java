@@ -20,9 +20,6 @@ package com.example.anandchandrasekar.wardrobeadvisor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-
-import java.util.ArrayList;
 
 /**
  * Demonstrates a "screen-slide" animation using a {@link ViewPager}. Because {@link ViewPager}
@@ -34,17 +31,13 @@ import java.util.ArrayList;
  * reverse animation is played when the user presses the "previous" button.</p>
  *
  */
-public class FilterBarTestActivity extends FragmentActivity implements FilterKindFragment.FilterSelectedListener, SelectedFiltersFragment.SelectedFiltersFragmentInteractionListener {
+public class FilterBarTestActivity extends FragmentActivity  {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
 
 
-    private ArrayList<Filter> currentlySelectedFilters;
 
-
-    private SelectedFiltersFragment selectedFiltersFragment;
-    private AllFiltersFragment allFiltersFragment;
 
 
     @Override
@@ -52,55 +45,13 @@ public class FilterBarTestActivity extends FragmentActivity implements FilterKin
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_bar_test);
 
-        selectedFiltersFragment = (SelectedFiltersFragment) getSupportFragmentManager().findFragmentById(R.id.selectedFiltersFragment);
-        allFiltersFragment = (AllFiltersFragment) getSupportFragmentManager().findFragmentById(R.id.allFiltersFragment);
 
-        currentlySelectedFilters = new ArrayList<Filter>();
 
 
     }
 
 
-    //filter bar fragment listener methods
-    @Override
-    public void addFilter(Filter filter) {
-        Log.d("", "ADDING FILTER: " + filter.getId());
-        currentlySelectedFilters.add(filter);
-        selectedFiltersFragment.layoutSelectedFilters();
-        allFiltersFragment.updateSelectedFilters();
-        printFilters();
-    }
 
-    @Override
-    public void removeFilter(Filter filter) {
-        Log.d("", "REMOVING FILTER: " + filter.getId());
-        currentlySelectedFilters.remove(filter);
-        selectedFiltersFragment.layoutSelectedFilters();
-        allFiltersFragment.updateSelectedFilters();
-        printFilters();
-    }
-
-    //selected filters bar fragment listener methods
-    @Override
-    public ArrayList<Filter> getCurrentlySelectedFilters() {
-        return this.currentlySelectedFilters;
-    }
-
-    @Override
-    public void removeSelectedFilter(Filter filter) {
-        Log.d("", "REMOVING SELECTED FILTER: " + filter.getId());
-        currentlySelectedFilters.remove(filter);
-        selectedFiltersFragment.layoutSelectedFilters();
-        allFiltersFragment.updateSelectedFilters();
-        printFilters();
-    }
-
-    public void printFilters() {
-        Log.d("sdf","PRINTING");
-        for(int i=0; i<currentlySelectedFilters.size(); i++) {
-            Log.d("sdf", currentlySelectedFilters.get(i).getFilterName() + " : " + currentlySelectedFilters.get(i).getId());
-        }
-    }
 
 
 

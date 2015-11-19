@@ -52,12 +52,13 @@ public class ItemFilter {
     }
 
     @Override
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         if (other == null) return false;
         if (other == this) return true;
-        if (!(other instanceof Filter))return false;
-        Filter otherFilter = (Filter)other;
+        if (!(other instanceof ItemFilter)) return false;
+        ItemFilter otherFilter = (ItemFilter) other;
         return (otherFilter.getId() == getId());
+    }
 
     public int getItemId() {
         return itemId;

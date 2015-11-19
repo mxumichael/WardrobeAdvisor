@@ -1,30 +1,34 @@
 package com.example.anandchandrasekar.wardrobeadvisor;
 
 import android.content.Intent;
-import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements FilterKindFragment.FilterSelectedListener, SelectedFiltersFragment.SelectedFiltersFragmentInteractionListener {
 
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
     HashMap<String, List<Item>> listDataChild;
     private DBHelper dbHelper;
+
+    //filter stuff
+    private ArrayList<ItemFilter> currentlySelectedFilters;
+    private SelectedFiltersFragment selectedFiltersFragment;
+    private AllFiltersFragment allFiltersFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,9 @@ public class Home extends AppCompatActivity {
         dbHelper = new DBHelper(this);
         setupClothsList();
 
+        selectedFiltersFragment = (SelectedFiltersFragment) getSupportFragmentManager().findFragmentById(R.id.selectedFiltersFragment);
+        allFiltersFragment = (AllFiltersFragment) getSupportFragmentManager().findFragmentById(R.id.allFiltersFragment);
+        currentlySelectedFilters = new ArrayList<ItemFilter>();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -46,16 +53,16 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab1);
-        fab1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                Intent i = new Intent(getApplicationContext(), FilterBarTestActivity.class);
-                startActivity(i);
-            }
-        });
+//        FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab1);
+//        fab1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//                Intent i = new Intent(getApplicationContext(), FilterBarTestActivity.class);
+//                startActivity(i);
+//            }
+//        });
 
         FloatingActionButton viewtest = (FloatingActionButton) findViewById(R.id.viewtest);
         viewtest.setOnClickListener(new View.OnClickListener() {
@@ -149,4 +156,50 @@ public class Home extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    //filter bar fragment listener methods
+    @Override
+    public void addFilter(ItemFilter filter) {
+        Log.d("", "ADDING FILTER: " + filter.getId());
+        currentlySelectedFilters.add(filter);
+        selectedFiltersFragment.layoutSelectedFilters();
+        allFiltersFragment.updateSelectedFilters();
+        printFilters();
+    }
+
+    @Override
+    public void removeFilter(ItemFilter filter) {
+        Log.d("", "REMOVING FILTER: " + filter.getId());
+        currentlySelectedFilters.remove(filter);
+        selectedFiltersFragment.layoutSelectedFilters();
+        allFiltersFragment.updateSelectedFilters();
+        printFilters();
+    }
+
+    @Override
+    public ArrayList<ItemFilter> getFiltersOfKind(String kind) {
+        return dbHelper.getFiltersOfKind(kind);
+    }
+
+    //selected filters bar fragment listener methods
+    @Override
+    public ArrayList<ItemFilter> getCurrentlySelectedFilters() {
+        return this.currentlySelectedFilters;
+    }
+
+    @Override
+    public void removeSelectedFilter(ItemFilter filter) {
+        Log.d("", "REMOVING SELECTED FILTER: " + filter.getId());
+        currentlySelectedFilters.remove(filter);
+        selectedFiltersFragment.layoutSelectedFilters();
+        allFiltersFragment.updateSelectedFilters();
+        printFilters();
+    }
+
+    public void printFilters() {
+        Log.d("sdf","PRINTING");
+        for(int i=0; i<currentlySelectedFilters.size(); i++) {
+            Log.d("sdf", currentlySelectedFilters.get(i).getFilterName() + " : " + currentlySelectedFilters.get(i).getId());
+        }
+    }
 }

@@ -17,8 +17,8 @@ public class SelectedFiltersFragment extends Fragment {
 
     private SelectedFiltersFragmentInteractionListener selectedFiltersFragmentInteractionListener;
 
-    private ArrayList<Filter> selectedFiltersList;
-    private HashMap<Filter, View> selectedFilterViewMap;
+    private ArrayList<ItemFilter> selectedFiltersList;
+    private HashMap<ItemFilter, View> selectedFilterViewMap;
     private LinearLayout linearLayout;
 
     /**
@@ -29,8 +29,8 @@ public class SelectedFiltersFragment extends Fragment {
     }
 
     public interface SelectedFiltersFragmentInteractionListener {
-        public void removeSelectedFilter(Filter filter);
-        public ArrayList<Filter> getCurrentlySelectedFilters();
+        public void removeSelectedFilter(ItemFilter filter);
+        public ArrayList<ItemFilter> getCurrentlySelectedFilters();
     }
 
     public SelectedFiltersFragment() {
@@ -48,7 +48,7 @@ public class SelectedFiltersFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        selectedFilterViewMap = new HashMap<Filter, View>();
+        selectedFilterViewMap = new HashMap<ItemFilter, View>();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class SelectedFiltersFragment extends Fragment {
     }
 
 
-    private void removeFilter(Filter filter) {
+    private void removeFilter(ItemFilter filter) {
         selectedFiltersFragmentInteractionListener.removeSelectedFilter(filter);
     }
 
@@ -72,7 +72,7 @@ public class SelectedFiltersFragment extends Fragment {
 
         Log.d("", "LAYING OUT SELECTED FILTERS- num: "+selectedFiltersList.size());
         for(int i=0;i<selectedFiltersList.size();i++){
-            final Filter currFilter = selectedFiltersList.get(i);
+            final ItemFilter currFilter = selectedFiltersList.get(i);
             final Integer filterId = currFilter.getId();
 
             View view = FilterView.createNew(getActivity(), currFilter);

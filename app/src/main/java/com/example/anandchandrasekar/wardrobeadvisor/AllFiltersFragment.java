@@ -36,8 +36,8 @@ public class AllFiltersFragment extends Fragment {
     }
 
     public interface SelectedFiltersFragmentInteractionListener {
-        public void removeSelectedFilter(Filter filter);
-        public ArrayList<Filter> getCurrentlySelectedFilters();
+        public void removeSelectedFilter(ItemFilter filter);
+        public ArrayList<ItemFilter> getCurrentlySelectedFilters();
     }
 
     public AllFiltersFragment() {

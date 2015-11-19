@@ -42,9 +42,9 @@ public class FilterKindFragment extends Fragment {
     private String filterKind;
     private DBHelper dbHelper;
 
-    private ArrayList<Filter> filtersList;
-    private ArrayList<Filter> selectedFiltersList;
-    private HashMap<Filter, View> filterViewMap;
+    private ArrayList<ItemFilter> filtersList;
+    private ArrayList<ItemFilter> selectedFiltersList;
+    private HashMap<ItemFilter, View> filterViewMap;
 
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
@@ -59,9 +59,10 @@ public class FilterKindFragment extends Fragment {
     }
 
     public interface FilterSelectedListener {
-        public void addFilter(Filter filter);
-        public void removeFilter(Filter filter);
-        public ArrayList<Filter> getCurrentlySelectedFilters();
+        public void addFilter(ItemFilter filter);
+        public void removeFilter(ItemFilter filter);
+        public ArrayList<ItemFilter> getCurrentlySelectedFilters();
+        public ArrayList<ItemFilter> getFiltersOfKind(String kind);
     }
 
     public FilterKindFragment() {
@@ -84,9 +85,9 @@ public class FilterKindFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        filtersList = new ArrayList<Filter>();
-        selectedFiltersList = new ArrayList<Filter>();
-        filterViewMap = new HashMap<Filter, View>();
+        filtersList = new ArrayList<ItemFilter>();
+        selectedFiltersList = new ArrayList<ItemFilter>();
+        filterViewMap = new HashMap<ItemFilter, View>();
 
         filterKind = getArguments().getString(ARG_FILTER_KIND);
         dbHelper = new DBHelper(getActivity());
@@ -104,7 +105,7 @@ public class FilterKindFragment extends Fragment {
 //        filterKindTextView.setText(filterKind);
 //        filterKindTextView.setRotation(-90);
         for(int i=0;i<filtersList.size();i++){
-            final Filter currFilter = filtersList.get(i);
+            final ItemFilter currFilter = filtersList.get(i);
             final Integer filterId = currFilter.getId();
 
             View view = FilterView.createNew(getActivity(), currFilter);
@@ -129,11 +130,11 @@ public class FilterKindFragment extends Fragment {
     }
 
 
-    private void addFilter(Filter filter) {
+    private void addFilter(ItemFilter filter) {
         filterSelectedListener.addFilter(filter);
     }
 
-    private void removeFilter(Filter filter) {
+    private void removeFilter(ItemFilter filter) {
         filterSelectedListener.removeFilter(filter);
     }
 
@@ -144,7 +145,7 @@ public class FilterKindFragment extends Fragment {
         Iterator it = filterViewMap.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
-            Filter currFilter = (Filter) pair.getKey();
+            ItemFilter currFilter = (ItemFilter) pair.getKey();
             View currFilterView = (View) pair.getValue();
 
             if (selectedFiltersList.contains(currFilter)) {
@@ -164,25 +165,27 @@ public class FilterKindFragment extends Fragment {
 //        }
 
         //right now using static entries
-        if(filterKind.equals(getString(R.string.filter_kind_color))) {
-            filtersList.add(new Filter(1, "Red", getString(R.string.filter_kind_color), null));
-            filtersList.add(new Filter(2, "Blue", getString(R.string.filter_kind_color), null));
-            filtersList.add(new Filter(3, "Green", getString(R.string.filter_kind_color), null));
-            for (int i=4; i<10; i++) {
-                filtersList.add(new Filter(i, "Orange", getString(R.string.filter_kind_color), null));
-            }
-        } else if(filterKind.equals(getString(R.string.filter_kind_type))) {
-            filtersList.add(new Filter(11, "Shirt", getString(R.string.filter_kind_type), null));
-            filtersList.add(new Filter(12, "Shorts", getString(R.string.filter_kind_type), null));
-            filtersList.add(new Filter(13, "Blazer", getString(R.string.filter_kind_type), null));
-            for (int i=14; i<20; i++) {
-                filtersList.add(new Filter(i, "Socks", getString(R.string.filter_kind_type), null));
-            }
-        } else if(filterKind.equals(getString(R.string.filter_kind_weather))) {
-            filtersList.add(new Filter(21, "Sunny", getString(R.string.filter_kind_weather), null));
-            filtersList.add(new Filter(22, "Rainy", getString(R.string.filter_kind_weather), null));
-            filtersList.add(new Filter(23, "Cold", getString(R.string.filter_kind_weather), null));
-        }
+//        if(filterKind.equals(getString(R.string.filter_kind_color))) {
+//            filtersList.add(new Filter(1, "Red", getString(R.string.filter_kind_color), null));
+//            filtersList.add(new Filter(2, "Blue", getString(R.string.filter_kind_color), null));
+//            filtersList.add(new Filter(3, "Green", getString(R.string.filter_kind_color), null));
+//            for (int i=4; i<10; i++) {
+//                filtersList.add(new Filter(i, "Orange", getString(R.string.filter_kind_color), null));
+//            }
+//        } else if(filterKind.equals(getString(R.string.filter_kind_type))) {
+//            filtersList.add(new Filter(11, "Shirt", getString(R.string.filter_kind_type), null));
+//            filtersList.add(new Filter(12, "Shorts", getString(R.string.filter_kind_type), null));
+//            filtersList.add(new Filter(13, "Blazer", getString(R.string.filter_kind_type), null));
+//            for (int i=14; i<20; i++) {
+//                filtersList.add(new Filter(i, "Socks", getString(R.string.filter_kind_type), null));
+//            }
+//        } else if(filterKind.equals(getString(R.string.filter_kind_weather))) {
+//            filtersList.add(new Filter(21, "Sunny", getString(R.string.filter_kind_weather), null));
+//            filtersList.add(new Filter(22, "Rainy", getString(R.string.filter_kind_weather), null));
+//            filtersList.add(new Filter(23, "Cold", getString(R.string.filter_kind_weather), null));
+//        }
+
+           filtersList.addAll(filterSelectedListener.getFiltersOfKind(filterKind));
     }
 
 }
