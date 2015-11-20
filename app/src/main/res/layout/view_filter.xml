@@ -5,29 +5,36 @@ android:layout_width="wrap_content"
 android:layout_height="match_parent" >
 
     <LinearLayout
-        android:id="@+id/hsv_ll"
+        android:id="@+id/hll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:weightSum="1" >
-        <ImageView
-            android:id="@+id/filterViewImage"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/vll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_weight="0.8"/>
-        <TextView
-            android:id="@+id/filterViewText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/filterViewImage"
-            android:layout_centerInParent="true"
-            android:singleLine="true"
-            android:text="Israel News"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_weight="0.2"/>
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:weightSum="1" >
+            <ImageView
+                android:id="@+id/filterViewImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_weight="0.8"/>
+            <TextView
+                android:id="@+id/filterViewText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/filterViewImage"
+                android:layout_centerInParent="true"
+                android:singleLine="true"
+                android:text="Israel News"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_weight="0.2"/>
+        </LinearLayout>
         <Space
             android:layout_width="20dp"
             android:layout_height="match_parent"/>

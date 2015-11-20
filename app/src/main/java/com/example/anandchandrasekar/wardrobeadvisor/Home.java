@@ -186,7 +186,6 @@ public class Home extends AppCompatActivity implements FilterKindFragment.Filter
         selectedFiltersFragment.layoutSelectedFilters();
         allFiltersFragment.updateSelectedFilters();
         filterListData();
-        printFilters();
     }
 
     @Override
@@ -196,7 +195,6 @@ public class Home extends AppCompatActivity implements FilterKindFragment.Filter
         selectedFiltersFragment.layoutSelectedFilters();
         allFiltersFragment.updateSelectedFilters();
         filterListData();
-        printFilters();
     }
 
     @Override
@@ -217,7 +215,14 @@ public class Home extends AppCompatActivity implements FilterKindFragment.Filter
         selectedFiltersFragment.layoutSelectedFilters();
         allFiltersFragment.updateSelectedFilters();
         filterListData();
-        printFilters();
+    }
+
+    @Override
+    public void clearAllFilters() {
+        currentlySelectedFilters.clear();
+        selectedFiltersFragment.layoutSelectedFilters();
+        allFiltersFragment.updateSelectedFilters();
+        filterListData();
     }
 
     public void printFilters() {

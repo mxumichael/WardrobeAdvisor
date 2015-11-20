@@ -30,6 +30,7 @@ public class SelectedFiltersFragment extends Fragment {
 
     public interface SelectedFiltersFragmentInteractionListener {
         public void removeSelectedFilter(ItemFilter filter);
+        public void clearAllFilters();
         public ArrayList<ItemFilter> getCurrentlySelectedFilters();
     }
 
@@ -57,9 +58,16 @@ public class SelectedFiltersFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_selected_filters, container, false);
         linearLayout = (LinearLayout) rootView.findViewById(R.id.selectedFiltersLinearLayout);
 
+        VerticalButton clearFiltersButton = (VerticalButton) rootView.findViewById(R.id.clearFiltersButton);
+        clearFiltersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedFiltersFragmentInteractionListener.clearAllFilters();
+            }
+        });
+
         return rootView;
     }
-
 
     private void removeFilter(ItemFilter filter) {
         selectedFiltersFragmentInteractionListener.removeSelectedFilter(filter);

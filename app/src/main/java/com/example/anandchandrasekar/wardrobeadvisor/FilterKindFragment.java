@@ -158,33 +158,6 @@ public class FilterKindFragment extends Fragment {
 
 
     private void populateFilterLabels(String filterKind) {
-        //load the filters from the database
-//        ArrayList<Filter> filters = dbHelper.getFiltersOfKind(filterKind);
-//        for(Filter currFilter: filters) {
-//            filterTextList.add(currFilter.getFilterName());
-//        }
-
-        //right now using static entries
-//        if(filterKind.equals(getString(R.string.filter_kind_color))) {
-//            filtersList.add(new Filter(1, "Red", getString(R.string.filter_kind_color), null));
-//            filtersList.add(new Filter(2, "Blue", getString(R.string.filter_kind_color), null));
-//            filtersList.add(new Filter(3, "Green", getString(R.string.filter_kind_color), null));
-//            for (int i=4; i<10; i++) {
-//                filtersList.add(new Filter(i, "Orange", getString(R.string.filter_kind_color), null));
-//            }
-//        } else if(filterKind.equals(getString(R.string.filter_kind_type))) {
-//            filtersList.add(new Filter(11, "Shirt", getString(R.string.filter_kind_type), null));
-//            filtersList.add(new Filter(12, "Shorts", getString(R.string.filter_kind_type), null));
-//            filtersList.add(new Filter(13, "Blazer", getString(R.string.filter_kind_type), null));
-//            for (int i=14; i<20; i++) {
-//                filtersList.add(new Filter(i, "Socks", getString(R.string.filter_kind_type), null));
-//            }
-//        } else if(filterKind.equals(getString(R.string.filter_kind_weather))) {
-//            filtersList.add(new Filter(21, "Sunny", getString(R.string.filter_kind_weather), null));
-//            filtersList.add(new Filter(22, "Rainy", getString(R.string.filter_kind_weather), null));
-//            filtersList.add(new Filter(23, "Cold", getString(R.string.filter_kind_weather), null));
-//        }
-
            filtersList.addAll(filterSelectedListener.getFiltersOfKind(filterKind));
     }
 
