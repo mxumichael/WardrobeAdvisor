@@ -1,8 +1,10 @@
 package com.example.anandchandrasekar.wardrobeadvisor;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -94,6 +96,28 @@ public class Scan extends AppCompatActivity {
         }
     }
 
+    public void bulk_update_helper(View view, String confirmation_message, final String notification_message, final int original_state, final int new_state ) {
+        new AlertDialog.Builder(this)
+                .setTitle("Confirmation")
+                .setMessage(confirmation_message)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        int affected = dbHelper.updateItemsFromStateToState(original_state, new_state);
+                        Toast.makeText(getApplicationContext(), notification_message + " clothes updated:"+affected, Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null).show();
+    }
+    public void button_dirty_to_in_wash_clicked(View view) {
+        bulk_update_helper(view, "Do you really want move all Dirty items to In Wash state?", "All Dirty items moved to In Wash", Item.STATE_DIRTY, Item.STATE_INWASH);
+    }
+    public void button_in_wash_to_clean_clicked(View view) {
+        bulk_update_helper(view, "Do you really want move all In Wash items to Clean state?", "All In Wash items moved to Clean", Item.STATE_INWASH, Item.STATE_CLEAN);
+    }
+    public void button_clean_to_dirty_clicked(View view) {
+        bulk_update_helper(view,"Do you really want move all Clean items to Dirty state?","All Clean items moved to Dirty",Item.STATE_CLEAN,Item.STATE_DIRTY);
+    }
     private void nfcTest() {
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 

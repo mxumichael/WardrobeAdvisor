@@ -160,7 +160,7 @@ public class ItemTableHelper {
     }
 
     public static int updateItemsFromStateToState(SQLiteDatabase database, Integer original_state, Integer new_state) {
-        String where_clause = " WHERE " + COLUMN_STATE + " = " + new_state ;
+        String where_clause = COLUMN_STATE + " = " + original_state ;
         ContentValues values = new ContentValues();
         values.put(COLUMN_STATE, new_state);
 

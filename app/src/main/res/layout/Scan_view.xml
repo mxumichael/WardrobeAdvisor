@@ -30,14 +30,8 @@
     </RadioGroup>
 
     <TextView
-        android:id="@+id/nfc_test_title1"
-        android:text="Database call below"
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
         android:id="@+id/database_call"
-        android:text="waiting for NFC read"
+        android:text="please scan your NFC tag"
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -51,6 +45,33 @@
         android:gravity="center"
         android:layout_gravity="center"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/cycle_diagram" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="move all Dirty to In Wash"
+        android:id="@+id/button_dirty_to_in_wash"
+        android:layout_gravity="center_horizontal"
+        android:onClick="button_dirty_to_in_wash_clicked"
+        android:layout_marginTop="5dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="move all In Wash to Clean"
+        android:id="@+id/button_in_wash_to_clean"
+        android:layout_gravity="center_horizontal"
+        android:onClick="button_in_wash_to_clean_clicked"
+        android:layout_marginTop="5dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="move all Clean to dirty"
+        android:id="@+id/button_clean_to_dirty"
+        android:layout_gravity="center_horizontal"
+        android:onClick="button_clean_to_dirty_clicked"
+        android:layout_marginTop="5dp" />
 
 </LinearLayout>
