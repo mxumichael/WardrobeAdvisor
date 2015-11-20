@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import java.util.List;
 
 public class Home extends AppCompatActivity implements FilterKindFragment.FilterSelectedListener, SelectedFiltersFragment.SelectedFiltersFragmentInteractionListener {
 
-    ExpandableListAdapter listAdapter;
+    ClothsAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
     HashMap<String, List<Item>> listDataChild;
@@ -52,17 +51,6 @@ public class Home extends AppCompatActivity implements FilterKindFragment.Filter
                 startActivity(i);
             }
         });
-
-//        FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab1);
-//        fab1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//                Intent i = new Intent(getApplicationContext(), FilterBarTestActivity.class);
-//                startActivity(i);
-//            }
-//        });
 
         FloatingActionButton viewtest = (FloatingActionButton) findViewById(R.id.viewtest);
         viewtest.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +117,39 @@ public class Home extends AppCompatActivity implements FilterKindFragment.Filter
         listDataChild.put(listDataHeader.get(2), inWashItems);
     }
 
+    private void filterListData() {
+        if(currentlySelectedFilters.size()==0) {
+            listAdapter.updateData(listDataHeader, listDataChild);
+            return;
+        }
+
+        ArrayList<String> filterIds = new ArrayList<String>();
+        for(int i=0; i<currentlySelectedFilters.size(); i++) {
+            filterIds.add(currentlySelectedFilters.get(i).getId()+"");
+        }
+
+        ArrayList<Item> cleanItems = dbHelper.getItemListForFilterIdListAndState(Item.STATE_CLEAN, filterIds);
+        ArrayList<Item> dirtyItems = dbHelper.getItemListForFilterIdListAndState(Item.STATE_DIRTY, filterIds);
+        ArrayList<Item> inWashItems = dbHelper.getItemListForFilterIdListAndState(Item.STATE_INWASH, filterIds);
+
+        String cleanStr = "Clean (" + cleanItems.size() + ")";
+        String dirtyStr = "Dirty (" + dirtyItems.size() + ")";
+        String inWashStr = "In Wash (" + inWashItems.size() + ")";
+
+        ArrayList<String> filteredListDataHeader = new ArrayList<String>();
+        HashMap<String, List<Item>> filteredListDataChild = new HashMap<String, List<Item>>();
+
+        // Adding child data
+        filteredListDataHeader.add(cleanStr);
+        filteredListDataHeader.add(dirtyStr);
+        filteredListDataHeader.add(inWashStr);
+
+        filteredListDataChild.put(filteredListDataHeader.get(0), cleanItems); // Header, Child data
+        filteredListDataChild.put(filteredListDataHeader.get(1), dirtyItems);
+        filteredListDataChild.put(filteredListDataHeader.get(2), inWashItems);
+
+        listAdapter.updateData(filteredListDataHeader, filteredListDataChild);
+    }
 
 
     @Override
@@ -164,6 +185,7 @@ public class Home extends AppCompatActivity implements FilterKindFragment.Filter
         currentlySelectedFilters.add(filter);
         selectedFiltersFragment.layoutSelectedFilters();
         allFiltersFragment.updateSelectedFilters();
+        filterListData();
         printFilters();
     }
 
@@ -173,6 +195,7 @@ public class Home extends AppCompatActivity implements FilterKindFragment.Filter
         currentlySelectedFilters.remove(filter);
         selectedFiltersFragment.layoutSelectedFilters();
         allFiltersFragment.updateSelectedFilters();
+        filterListData();
         printFilters();
     }
 
@@ -193,6 +216,7 @@ public class Home extends AppCompatActivity implements FilterKindFragment.Filter
         currentlySelectedFilters.remove(filter);
         selectedFiltersFragment.layoutSelectedFilters();
         allFiltersFragment.updateSelectedFilters();
+        filterListData();
         printFilters();
     }
 

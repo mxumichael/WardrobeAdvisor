@@ -159,6 +159,21 @@ public class ItemTableHelper {
         return list;
     }
 
+    public static ArrayList<Item> getItemListForFilterIdListAndState(SQLiteDatabase database, List<String> filterIds, Integer state) {
+        // TODO: Change to a StringBuilder if you care about efficiency
+        String formattedFilterIds = "";
+        for (String filterId : filterIds) {
+            formattedFilterIds = formattedFilterIds + filterId + ", ";
+        }
+        // Strip off the extra ", "
+        formattedFilterIds = formattedFilterIds.substring(0, formattedFilterIds.length() - 2);
+
+        return getItemsWithQuery(database, "SELECT * FROM Item I\n" +
+                "JOIN Item_Filter IF ON I.item_id = IF.item_id\n" +
+                "WHERE IF.filter_id IN (" + formattedFilterIds + ") and I." + COLUMN_STATE + " = " + state + "\n" +
+                "GROUP BY I.item_id");
+    }
+
     public static int updateItemsFromStateToState(SQLiteDatabase database, Integer original_state, Integer new_state) {
         String where_clause = " WHERE " + COLUMN_STATE + " = " + new_state ;
         ContentValues values = new ContentValues();
