@@ -2,15 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:id="@+id/filterView"
 android:layout_width="wrap_content"
-android:layout_height="match_parent" >
+android:layout_height="match_parent"
+    android:background="@android:color/transparent">
 
     <LinearLayout
         android:id="@+id/hll"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:background="@android:color/transparent">
         <LinearLayout
             android:id="@+id/vll"
             android:layout_width="wrap_content"
@@ -18,38 +18,43 @@ android:layout_height="match_parent" >
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:weightSum="1"
-            android:layout_weight="0.9">
+            android:background="@android:color/transparent">
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.05"/>
-            <ImageView
+                android:layout_weight="0.05"
+                android:background="@android:color/transparent"/>
+            <com.example.anandchandrasekar.wardrobeadvisor.RoundedImageView
                 android:id="@+id/filterViewImage"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:adjustViewBounds="true"
+                android:padding="3dp"
                 android:scaleType="fitCenter"
-                android:layout_weight="0.65"/>
+                android:layout_weight="0.65"
+                android:background="@android:color/transparent"/>
             <TextView
                 android:id="@+id/filterViewText"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_below="@id/filterViewImage"
-                android:gravity="center"
+                android:gravity="center_horizontal"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
-                android:textSize="18sp"
+                android:textSize="10sp"
                 android:textStyle="bold"
-                android:layout_weight="0.25"/>
+                android:layout_weight="0.25"
+                android:background="@android:color/transparent"/>
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.05"/>
+                android:layout_weight="0.05"
+                android:background="@android:color/transparent"/>
         </LinearLayout>
         <Space
-            android:layout_width="0dp"
+            android:layout_width="15dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.1"/>
+            android:background="@android:color/transparent"/>
     </LinearLayout>
 
 </RelativeLayout>

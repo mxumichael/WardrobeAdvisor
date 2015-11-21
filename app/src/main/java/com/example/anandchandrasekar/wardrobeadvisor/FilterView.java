@@ -22,7 +22,7 @@ public class FilterView {
             tv.setText(filter.getFilterName());
             iv.setImageDrawable(context.getResources().getDrawable(R.drawable.black_blazer));
 
-            view.setLayoutParams(new LinearLayout.LayoutParams(100, LinearLayout.LayoutParams.MATCH_PARENT));
+            view.setLayoutParams(new LinearLayout.LayoutParams(150, LinearLayout.LayoutParams.MATCH_PARENT));
 
             return view;
         }

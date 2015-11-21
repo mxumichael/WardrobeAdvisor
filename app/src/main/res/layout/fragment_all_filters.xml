@@ -12,11 +12,13 @@
         <ImageButton
             android:id="@+id/prevFilterButton"
             android:layout_width="0dip"
+            android:padding="3dip"
             android:layout_height="fill_parent"
             android:layout_weight="0.10"
-            android:src="@drawable/right_arrow"
+            android:src="@drawable/left_arrow"
             android:adjustViewBounds="true"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            android:background="#00000000"/>
 
         <android.support.v4.view.ViewPager
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,16 +26,20 @@
             android:id="@+id/filterViewPager"
             android:layout_width="0dip"
             android:layout_height="fill_parent"
-            android:layout_weight="0.80"/>
+            android:layout_weight="0.80"
+            android:background="@android:color/transparent"/>
 
         <ImageButton
             android:id="@+id/nextFilterButton"
             android:layout_width="0dip"
+            android:padding="3dip"
             android:layout_height="fill_parent"
             android:layout_weight="0.10"
+            android:layout_marginTop="10dp"
             android:src="@drawable/right_arrow"
             android:adjustViewBounds="true"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            android:background="#00000000"/>
     </LinearLayout>
 
 </FrameLayout>
