@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,11 +31,14 @@ public class Scan extends AppCompatActivity {
     private NfcAdapter mNfcAdapter;
     public static final String MIME_TEXT_PLAIN = "text/plain";
     TextView mTextView;
+    DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scan_view);
+
+        dbHelper=new DBHelper(this);
 
         nfcTest();
 
@@ -68,21 +72,21 @@ public class Scan extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.radio_dirty:
                 if (checked) {
-                    Toast.makeText(getApplicationContext(), "radio_dirty checked", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "radio_dirty checked", Toast.LENGTH_SHORT).show();
                     editor.putString("destination", "dirty");
                     editor.commit();
                 }
                 break;
             case R.id.radio_clean:
                 if (checked) {
-                    Toast.makeText(getApplicationContext(), "radio_clean checked", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "radio_clean checked", Toast.LENGTH_SHORT).show();
                     editor.putString("destination", "clean");
                     editor.commit();
                 }
                 break;
             case R.id.radio_in_wash:
                 if (checked) {
-                    Toast.makeText(getApplicationContext(), "radio_in_wash checked", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "radio_in_wash checked", Toast.LENGTH_SHORT).show();
                     editor.putString("destination", "in_wash");
                     editor.commit();
                 }
@@ -116,7 +120,7 @@ public class Scan extends AppCompatActivity {
             Toast.makeText(this, "NFC is disabled.", Toast.LENGTH_LONG).show();
             return "FAIL";
         } else {
-            Toast.makeText(this, "NFC is OK.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "NFC is OK.", Toast.LENGTH_SHORT).show();
         }
         return "OK";
     }
@@ -322,11 +326,28 @@ public class Scan extends AppCompatActivity {
             mTextView = (TextView) findViewById(R.id.database_call);
             SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
             String destination = sharedPref.getString("destination", "dirty");
+            int parseint = Integer.parseInt(result);
+            Item item = dbHelper.getItemById((int) parseint);//getting the scanned item;
 
             if (result != null) {
-                //mTextView.setText("Read content: " + result);
-                mTextView.setText("update itemTable set state ="+destination+" where itemId =" + result);
+                mTextView.setText("Itemid:"+parseint+" name:"+item.getName()+" will be changed from state:"+item.getStateName()+" to state:" + destination);
+                switch (destination) {
+                    case "clean":
+                        dbHelper.updateItemState(parseint, Item.STATE_CLEAN);
+                        break;
+                    case "dirty":
+                        dbHelper.updateItemState(parseint, Item.STATE_DIRTY);
+                        break;
+                    case "in_wash":
+                        dbHelper.updateItemState(parseint, Item.STATE_INWASH);
+                        break;
+                }
             }
+
+
+            ImageView img  = (ImageView)findViewById(R.id.item_image_scan);
+            int imgId = getResources().getIdentifier(item.getImagePath(), "drawable", getApplicationContext().getPackageName());
+            img.setImageResource(imgId);
         }
     }
 }

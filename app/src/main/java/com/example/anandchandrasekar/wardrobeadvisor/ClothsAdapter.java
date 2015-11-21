@@ -107,4 +107,10 @@ public class ClothsAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
+    public void updateData(List<String> listDataHeader, HashMap<String, List<Item>> listChildData) {
+        _listDataHeader = listDataHeader;
+        _listDataChild = listChildData;
+        this.notifyDataSetChanged();
+    }
+
 }

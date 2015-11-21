@@ -1,0 +1,56 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.anandchandrasekar.wardrobeadvisor.SelectedFiltersFragment">
+
+    <LinearLayout
+    android:id="@+id/selectedFiltersLL"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+        android:background="#C0000000">
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="match_parent"/>
+        <LinearLayout
+            android:id="@+id/clearbuttonvl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+            <Space
+                android:layout_height="10dp"
+                android:layout_width="match_parent"/>
+            <com.example.anandchandrasekar.wardrobeadvisor.VerticalButton
+                android:id="@+id/clearFiltersButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="25sp"
+                android:padding="10dp"
+                android:background="@drawable/clearfiltersbutton"
+                android:text="CLEAR">
+            </com.example.anandchandrasekar.wardrobeadvisor.VerticalButton>
+            <Space
+                android:layout_height="10dp"
+                android:layout_width="match_parent"/>
+        </LinearLayout>
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="match_parent"/>
+        <HorizontalScrollView
+            android:id="@+id/selectedFiltersHSV"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:fillViewport="true"
+            android:measureAllChildren="false">
+            <LinearLayout
+                android:id="@+id/selectedFiltersLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+</FrameLayout>

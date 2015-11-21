@@ -42,8 +42,6 @@
 
             </intent-filter>
         </activity>
-        <activity android:name=".FilterBarTestActivity" >
-        </activity>
         <activity android:name=".Scan" >
         </activity>
         <activity android:name=".SettingsView" >
