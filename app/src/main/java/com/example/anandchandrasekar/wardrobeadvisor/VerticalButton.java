@@ -2,7 +2,6 @@ package com.example.anandchandrasekar.wardrobeadvisor;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.Button;
@@ -30,24 +29,59 @@ public class VerticalButton extends Button{
         setMeasuredDimension(getMeasuredHeight(), getMeasuredWidth());
     }
 
+//    @Override
+//    protected void onDraw(Canvas canvas){
+//        TextPaint textPaint = getPaint();
+//        textPaint.setColor(getCurrentTextColor());
+//        textPaint.drawableState = getDrawableState();
+//
+//        canvas.save();
+//
+//        if(topDown){
+//            canvas.translate(getWidth(), 0);
+//            canvas.rotate(90);
+//        }else {
+//            canvas.translate(0, getHeight());
+//            canvas.rotate(-90);
+//        }
+//
+//        canvas.translate(getCompoundPaddingLeft(), getExtendedPaddingTop());
+//        getLayout().draw(canvas);
+//        canvas.restore();
+//    }
+
     @Override
-    protected void onDraw(Canvas canvas){
-        TextPaint textPaint = getPaint();
-        textPaint.setColor(getCurrentTextColor());
-        textPaint.drawableState = getDrawableState();
-
-        canvas.save();
-
+    public void draw(Canvas canvas){
         if(topDown){
-            canvas.translate(getWidth(), 0);
+            canvas.translate(getHeight(), 0);
             canvas.rotate(90);
         }else {
-            canvas.translate(0, getHeight());
+            canvas.translate(0, getWidth());
             canvas.rotate(-90);
         }
-
-        canvas.translate(getCompoundPaddingLeft(), getExtendedPaddingTop());
-        getLayout().draw(canvas);
-        canvas.restore();
+        canvas.clipRect(0, 0, getWidth(), getHeight(), android.graphics.Region.Op.REPLACE);
+        super.draw(canvas);
     }
+
+//    protected void onDraw(Canvas canvas){
+//        TextPaint textPaint = getPaint();
+//        textPaint.setColor(getCurrentTextColor());
+//        textPaint.drawableState = getDrawableState();
+//
+//        canvas.save();
+//
+//        if(topDown){
+//            canvas.translate(getWidth(), 0);
+//            canvas.rotate(90);
+//        }else {
+//            canvas.translate(0, getHeight());
+//            canvas.rotate(-90);
+//        }
+//
+//
+//        canvas.translate(getCompoundPaddingLeft(), getExtendedPaddingTop());
+//
+//        getLayout().draw(canvas);
+//        canvas.restore();
+//    }
 }

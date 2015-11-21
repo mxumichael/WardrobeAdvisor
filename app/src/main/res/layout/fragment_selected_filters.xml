@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-        android:background="#C0000000">
+        android:background="#F3000000">
         <Space
             android:layout_width="10dp"
             android:layout_height="match_parent"/>
@@ -24,9 +24,8 @@
             <com.example.anandchandrasekar.wardrobeadvisor.VerticalButton
                 android:id="@+id/clearFiltersButton"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textSize="25sp"
-                android:padding="10dp"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
                 android:background="@drawable/clearfiltersbutton"
                 android:text="CLEAR">
             </com.example.anandchandrasekar.wardrobeadvisor.VerticalButton>

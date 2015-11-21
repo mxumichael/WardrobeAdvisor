@@ -149,9 +149,9 @@ public class FilterKindFragment extends Fragment {
             View currFilterView = (View) pair.getValue();
 
             if (selectedFiltersList.contains(currFilter)) {
-                currFilterView.setBackgroundColor(Color.BLUE);
+                currFilterView.setBackgroundColor(Color.parseColor("#D91C2F"));
             } else {
-                currFilterView.setBackgroundColor(Color.WHITE);
+                currFilterView.setBackgroundColor(Color.TRANSPARENT);
             }
         }
     }

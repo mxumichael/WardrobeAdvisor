@@ -1,6 +1,7 @@
 package com.example.anandchandrasekar.wardrobeadvisor;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -79,10 +81,34 @@ public class AllFiltersFragment extends Fragment {
         });
 
         prevFilterPageButton = (ImageButton) rootView.findViewById(R.id.prevFilterButton);
-        prevFilterPageButton.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                filterPager.setCurrentItem(filterPager.getCurrentItem()-1, true);
-                updatePagerNavigationButtons(filterPager.getCurrentItem());
+//        prevFilterPageButton.setOnClickListener(new Button.OnClickListener() {
+//            public void onClick(View v) {
+//
+//            }
+//        });
+        prevFilterPageButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        ImageButton view = (ImageButton) v;
+                        view.getBackground().setColorFilter(0x11000000, PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        filterPager.setCurrentItem(filterPager.getCurrentItem() - 1, true);
+                        updatePagerNavigationButtons(filterPager.getCurrentItem());
+                        break;
+                    }
+                    case MotionEvent.ACTION_CANCEL: {
+                        ImageButton view = (ImageButton) v;
+                        view.getBackground().clearColorFilter();
+                        view.invalidate();
+                        break;
+                    }
+                }
+                return true;
             }
         });
         nextFilterPageButton = (ImageButton) rootView.findViewById(R.id.nextFilterButton);
