@@ -2,6 +2,7 @@ package com.example.anandchandrasekar.wardrobeadvisor;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class ViewItemActivity extends AppCompatActivity {
 
@@ -42,7 +45,7 @@ public class ViewItemActivity extends AppCompatActivity {
         textView.setText(item.getType());
 
         textView = (TextView)findViewById(R.id.item_state_text);
-        textView.setText(item.getState().toString());
+        textView.setText(item.getStateName());
 
         textView = (TextView)findViewById(R.id.item_color_text);
         textView.setText(item.getColor());
@@ -64,10 +67,14 @@ public class ViewItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         long id = intent.getLongExtra("item_id", -1);
 
-        Item item = dbHelper.getItemById((int)id);
+        Item item = dbHelper.getItemById((int) id);
 
         ImageView img  = (ImageView)findViewById(R.id.item_image);
         int imgId = getResources().getIdentifier(item.getImagePath(), "drawable", getApplicationContext().getPackageName());
+        img.setImageResource(imgId);
+
+        img = (ImageView)findViewById(R.id.item_state_icon);
+        imgId = getResources().getIdentifier(item.getStateImage(item.getState()), "drawable", getApplicationContext().getPackageName());
         img.setImageResource(imgId);
 
         TextView textView = (TextView)findViewById(R.id.item_name_text);
@@ -77,7 +84,7 @@ public class ViewItemActivity extends AppCompatActivity {
         textView.setText(item.getType());
 
         textView = (TextView)findViewById(R.id.item_state_text);
-        textView.setText(item.getState().toString());
+        textView.setText(item.getStateName());
 
         textView = (TextView)findViewById(R.id.item_color_text);
         textView.setText(item.getColor());

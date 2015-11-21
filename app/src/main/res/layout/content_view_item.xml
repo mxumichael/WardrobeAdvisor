@@ -54,18 +54,29 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
-
                 <TextView
                     android:id="@+id/item_state_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
+                    android:layout_gravity="center_vertical"
                     android:text="State" />
+
+                <ImageView
+                    android:id="@+id/item_state_icon"
+                    android:layout_width="10dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:layout_gravity="left"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/clean"  />
 
                 <TextView
                     android:id="@+id/item_state_text"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:text="@string/app_name" />
             </TableRow>
 
