@@ -7,37 +7,49 @@ android:layout_height="match_parent" >
     <LinearLayout
         android:id="@+id/hll"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1">
         <LinearLayout
             android:id="@+id/vll"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:weightSum="1" >
+            android:weightSum="1"
+            android:layout_weight="0.9">
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.05"/>
             <ImageView
                 android:id="@+id/filterViewImage"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_weight="0.8"/>
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:layout_weight="0.65"/>
             <TextView
                 android:id="@+id/filterViewText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_below="@id/filterViewImage"
-                android:layout_centerInParent="true"
+                android:gravity="center"
                 android:singleLine="true"
-                android:text="Israel News"
+                android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:layout_weight="0.2"/>
+                android:layout_weight="0.25"/>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.05"/>
         </LinearLayout>
         <Space
-            android:layout_width="20dp"
-            android:layout_height="match_parent"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"/>
     </LinearLayout>
 
 </RelativeLayout>

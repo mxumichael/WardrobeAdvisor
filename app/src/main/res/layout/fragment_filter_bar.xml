@@ -19,13 +19,15 @@
             android:layout_height="fill_parent"
             android:layout_alignParentTop="true"
             android:fillViewport="true"
-            android:measureAllChildren="false">
+            android:measureAllChildren="false"
+            android:background="#00000000">
             <LinearLayout
                 android:id="@+id/hsv_ll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:background="#000000">
             </LinearLayout>
         </HorizontalScrollView>
     <!--</LinearLayout>-->

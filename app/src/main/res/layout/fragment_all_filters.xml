@@ -7,14 +7,16 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="horizontal"
+        android:background="#000000"
         android:weightSum="1">
-        <Button
+        <ImageButton
             android:id="@+id/prevFilterButton"
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="0.10"
-            android:text="Prev"
-            android:textSize="6sp"/>
+            android:src="@drawable/right_arrow"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"/>
 
         <android.support.v4.view.ViewPager
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,13 +26,14 @@
             android:layout_height="fill_parent"
             android:layout_weight="0.80"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/nextFilterButton"
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="0.10"
-            android:text="Next"
-            android:textSize="6sp"/>
+            android:src="@drawable/right_arrow"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"/>
     </LinearLayout>
 
 </FrameLayout>

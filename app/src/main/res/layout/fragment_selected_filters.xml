@@ -8,8 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-        android:background="#000000"
-        android:alpha="0.8">
+        android:background="#C0000000">
         <Space
             android:layout_width="10dp"
             android:layout_height="match_parent"/>

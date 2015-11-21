@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
@@ -24,8 +25,8 @@ public class AllFiltersFragment extends Fragment {
 
     private ViewPager filterPager;
     private PagerAdapter filterPagerAdapter;
-    private Button prevFilterPageButton;
-    private Button nextFilterPageButton;
+    private ImageButton prevFilterPageButton;
+    private ImageButton nextFilterPageButton;
     private ArrayList<FilterKindFragment> filterFragments;
 
     /**
@@ -77,14 +78,14 @@ public class AllFiltersFragment extends Fragment {
             }
         });
 
-        prevFilterPageButton = (Button) rootView.findViewById(R.id.prevFilterButton);
+        prevFilterPageButton = (ImageButton) rootView.findViewById(R.id.prevFilterButton);
         prevFilterPageButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 filterPager.setCurrentItem(filterPager.getCurrentItem()-1, true);
                 updatePagerNavigationButtons(filterPager.getCurrentItem());
             }
         });
-        nextFilterPageButton = (Button) rootView.findViewById(R.id.nextFilterButton);
+        nextFilterPageButton = (ImageButton) rootView.findViewById(R.id.nextFilterButton);
         nextFilterPageButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 filterPager.setCurrentItem(filterPager.getCurrentItem() + 1, true);
