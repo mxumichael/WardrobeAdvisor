@@ -1,30 +1,33 @@
 package com.example.anandchandrasekar.wardrobeadvisor;
 
 import android.content.Intent;
-import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements FilterKindFragment.FilterSelectedListener, SelectedFiltersFragment.SelectedFiltersFragmentInteractionListener {
 
-    ExpandableListAdapter listAdapter;
+    ClothsAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
     HashMap<String, List<Item>> listDataChild;
     private DBHelper dbHelper;
+
+    //filter stuff
+    private ArrayList<ItemFilter> currentlySelectedFilters;
+    private SelectedFiltersFragment selectedFiltersFragment;
+    private AllFiltersFragment allFiltersFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,23 +39,15 @@ public class Home extends AppCompatActivity {
         dbHelper = new DBHelper(this);
         setupClothsList();
 
+        selectedFiltersFragment = (SelectedFiltersFragment) getSupportFragmentManager().findFragmentById(R.id.selectedFiltersFragment);
+        allFiltersFragment = (AllFiltersFragment) getSupportFragmentManager().findFragmentById(R.id.allFiltersFragment);
+        currentlySelectedFilters = new ArrayList<ItemFilter>();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), Scan.class);
-                startActivity(i);
-            }
-        });
-
-        FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab1);
-        fab1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                Intent i = new Intent(getApplicationContext(), FilterBarTestActivity.class);
                 startActivity(i);
             }
         });
@@ -122,6 +117,39 @@ public class Home extends AppCompatActivity {
         listDataChild.put(listDataHeader.get(2), inWashItems);
     }
 
+    private void filterListData() {
+        if(currentlySelectedFilters.size()==0) {
+            listAdapter.updateData(listDataHeader, listDataChild);
+            return;
+        }
+
+        ArrayList<String> filterIds = new ArrayList<String>();
+        for(int i=0; i<currentlySelectedFilters.size(); i++) {
+            filterIds.add(currentlySelectedFilters.get(i).getId()+"");
+        }
+
+        ArrayList<Item> cleanItems = dbHelper.getItemListForFilterIdListAndState(Item.STATE_CLEAN, filterIds);
+        ArrayList<Item> dirtyItems = dbHelper.getItemListForFilterIdListAndState(Item.STATE_DIRTY, filterIds);
+        ArrayList<Item> inWashItems = dbHelper.getItemListForFilterIdListAndState(Item.STATE_INWASH, filterIds);
+
+        String cleanStr = "Clean (" + cleanItems.size() + ")";
+        String dirtyStr = "Dirty (" + dirtyItems.size() + ")";
+        String inWashStr = "In Wash (" + inWashItems.size() + ")";
+
+        ArrayList<String> filteredListDataHeader = new ArrayList<String>();
+        HashMap<String, List<Item>> filteredListDataChild = new HashMap<String, List<Item>>();
+
+        // Adding child data
+        filteredListDataHeader.add(cleanStr);
+        filteredListDataHeader.add(dirtyStr);
+        filteredListDataHeader.add(inWashStr);
+
+        filteredListDataChild.put(filteredListDataHeader.get(0), cleanItems); // Header, Child data
+        filteredListDataChild.put(filteredListDataHeader.get(1), dirtyItems);
+        filteredListDataChild.put(filteredListDataHeader.get(2), inWashItems);
+
+        listAdapter.updateData(filteredListDataHeader, filteredListDataChild);
+    }
 
 
     @Override
@@ -149,4 +177,58 @@ public class Home extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    //filter bar fragment listener methods
+    @Override
+    public void addFilter(ItemFilter filter) {
+        Log.d("", "ADDING FILTER: " + filter.getId());
+        currentlySelectedFilters.add(filter);
+        selectedFiltersFragment.layoutSelectedFilters();
+        allFiltersFragment.updateSelectedFilters();
+        filterListData();
+    }
+
+    @Override
+    public void removeFilter(ItemFilter filter) {
+        Log.d("", "REMOVING FILTER: " + filter.getId());
+        currentlySelectedFilters.remove(filter);
+        selectedFiltersFragment.layoutSelectedFilters();
+        allFiltersFragment.updateSelectedFilters();
+        filterListData();
+    }
+
+    @Override
+    public ArrayList<ItemFilter> getFiltersOfKind(String kind) {
+        return dbHelper.getFiltersOfKind(kind);
+    }
+
+    //selected filters bar fragment listener methods
+    @Override
+    public ArrayList<ItemFilter> getCurrentlySelectedFilters() {
+        return this.currentlySelectedFilters;
+    }
+
+    @Override
+    public void removeSelectedFilter(ItemFilter filter) {
+        Log.d("", "REMOVING SELECTED FILTER: " + filter.getId());
+        currentlySelectedFilters.remove(filter);
+        selectedFiltersFragment.layoutSelectedFilters();
+        allFiltersFragment.updateSelectedFilters();
+        filterListData();
+    }
+
+    @Override
+    public void clearAllFilters() {
+        currentlySelectedFilters.clear();
+        selectedFiltersFragment.layoutSelectedFilters();
+        allFiltersFragment.updateSelectedFilters();
+        filterListData();
+    }
+
+    public void printFilters() {
+        Log.d("sdf","PRINTING");
+        for(int i=0; i<currentlySelectedFilters.size(); i++) {
+            Log.d("sdf", currentlySelectedFilters.get(i).getFilterName() + " : " + currentlySelectedFilters.get(i).getId());
+        }
+    }
 }

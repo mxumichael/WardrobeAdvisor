@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -45,6 +46,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<Item> getItemsByState(Integer state) {
         SQLiteDatabase db = this.getReadableDatabase();
         return ItemTableHelper.getItemsByState(db, state);
+    }
+
+    public ArrayList<Item> getItemListForFilterIdListAndState(Integer state, List<String> filterIds) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return ItemTableHelper.getItemListForFilterIdListAndState(db, filterIds, state);
     }
 
     public boolean updateItemState(Integer id, Integer new_state) {

@@ -2,20 +2,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context=".MainActivity" >
-    <HorizontalScrollView
-        android:id="@+id/hsv"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentTop="true"
-        android:fillViewport="true"
-        android:measureAllChildren="false">
-        <LinearLayout
-            android:id="@+id/hsv_ll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-        </LinearLayout>
-    </HorizontalScrollView>
+    tools:context=".MainActivity"
+    android:background="@android:color/transparent" >
+    <!--<LinearLayout-->
+        <!--android:id="@+id/ll"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal" >-->
+        <!--<TextView-->
+            <!--android:id="@+id/filterKindTextView"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content" >-->
+        <!--</TextView>-->
+        <HorizontalScrollView
+            android:id="@+id/hsv"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:fillViewport="true"
+            android:measureAllChildren="false"
+            android:background="@android:color/transparent"
+            android:fadeScrollbars="false"
+            android:scrollbarThumbHorizontal="@drawable/scrollbar"
+            android:scrollbarSize="2dip">
+            <LinearLayout
+                android:id="@+id/hsv_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:background="@android:color/black">
+            </LinearLayout>
+        </HorizontalScrollView>
+    <!--</LinearLayout>-->
 </RelativeLayout>
