@@ -21,7 +21,10 @@
             android:layout_alignParentTop="true"
             android:fillViewport="true"
             android:measureAllChildren="false"
-            android:background="@android:color/transparent">
+            android:background="@android:color/transparent"
+            android:fadeScrollbars="false"
+            android:scrollbarThumbHorizontal="@drawable/scrollbar"
+            android:scrollbarSize="2dip">
             <LinearLayout
                 android:id="@+id/hsv_ll"
                 android:layout_width="wrap_content"

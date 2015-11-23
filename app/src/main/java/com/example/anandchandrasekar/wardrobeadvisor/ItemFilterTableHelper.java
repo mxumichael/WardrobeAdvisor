@@ -20,6 +20,7 @@ public class ItemFilterTableHelper {
     private static final String COLUMN_FILTER_NAME = "filter_name";
     private static final String COLUMN_FILTER_KIND = "filter_kind";
     private static final String COLUMN_FILTER_IMAGE_PATH = "filter_image_path";
+    private static final String COLUMN_FILTER_DRAWABLE_ID = "filter_drawable_id";
 
     private static final String FILTER_COLOR = "filter_kind_color";
     private static final String FILTER_STATE = "filter_kind_state";
@@ -33,7 +34,8 @@ public class ItemFilterTableHelper {
                 COLUMN_ITEM_ID + " INTEGER REFERENCES Item, " +
                 COLUMN_FILTER_KIND + " VARCHAR(255) NOT NULL, " +
                 COLUMN_FILTER_ID + " INTEGER NOT NULL, " +
-                COLUMN_FILTER_NAME + " VARCHAR(255) NOT NULL) ");
+                COLUMN_FILTER_NAME + " VARCHAR(255) NOT NULL, " +
+                COLUMN_FILTER_DRAWABLE_ID + " INTEGER NOT NULL) ");
         loadDefaultFilters(database, context);
         Log.d("", "creating table");
     }
@@ -44,6 +46,7 @@ public class ItemFilterTableHelper {
         contentValues.put(COLUMN_FILTER_KIND, itemFilter.getFilterKind());
         contentValues.put(COLUMN_FILTER_ID, itemFilter.getId());
         contentValues.put(COLUMN_FILTER_NAME, itemFilter.getFilterName());
+        contentValues.put(COLUMN_FILTER_DRAWABLE_ID, itemFilter.getFilterDrawableId());
 //        contentValues.put(COLUMN_FILTER_IMAGE_PATH, itemFilter.getFilterImagePath());
         database.insert(TABLE_NAME, null, contentValues);
     }
@@ -80,11 +83,12 @@ public class ItemFilterTableHelper {
             String string1 = res.getString(res.getColumnIndex(COLUMN_FILTER_KIND));
             String string2 = null;
             int anInt1 = res.getInt(res.getColumnIndex(COLUMN_ITEM_ID));
+            int fitlerDrawableId = res.getInt(res.getColumnIndex(COLUMN_FILTER_DRAWABLE_ID));
             ItemFilter currItemFilter = new ItemFilter(anInt,
                     string,
                     string1,
                     string2,
-                    anInt1);
+                    anInt1, fitlerDrawableId);
             itemFilters.add(currItemFilter);
             res.moveToNext();
         }
@@ -139,7 +143,7 @@ public class ItemFilterTableHelper {
             int filterId = getFilterIdForQuery(db, queryString);
             if(filterId == -1)
                 filterId = ++filterCount;
-            insertFilter(db, new ItemFilter(filterId, color, FILTER_COLOR, null, item.getId()));
+            insertFilter(db, new ItemFilter(filterId, color, FILTER_COLOR, null, item.getId(), getFilterDrawableIdForFilterName(color)));
 
             String type = item.getType().toLowerCase();
             queryString = "SELECT * FROM " + TABLE_NAME + " WHERE " +
@@ -148,7 +152,7 @@ public class ItemFilterTableHelper {
             filterId = getFilterIdForQuery(db, queryString);
             if(filterId == -1)
                 filterId = ++filterCount;
-            insertFilter(db, new ItemFilter(filterId, type, FILTER_TYPE, null, item.getId()));
+            insertFilter(db, new ItemFilter(filterId, type, FILTER_TYPE, null, item.getId(), getFilterDrawableIdForFilterName(type)));
 
             String weather = item.getWeather().toLowerCase();
             queryString = "SELECT * FROM " + TABLE_NAME + " WHERE " +
@@ -157,7 +161,7 @@ public class ItemFilterTableHelper {
             filterId = getFilterIdForQuery(db, queryString);
             if(filterId == -1)
                 filterId = ++filterCount;
-            insertFilter(db, new ItemFilter(filterId, weather, FILTER_WEATHER, null, item.getId()));
+            insertFilter(db, new ItemFilter(filterId, weather, FILTER_WEATHER, null, item.getId(), getFilterDrawableIdForFilterName(weather)));
 
             String state = item.getState().toString();
             queryString = "SELECT * FROM " + TABLE_NAME + " WHERE " +
@@ -166,7 +170,7 @@ public class ItemFilterTableHelper {
             filterId = getFilterIdForQuery(db, queryString);
             if(filterId == -1)
                 filterId = ++filterCount;
-            insertFilter(db, new ItemFilter(filterId, state, FILTER_STATE, null, item.getId()));
+            insertFilter(db, new ItemFilter(filterId, state, FILTER_STATE, null, item.getId(), getFilterDrawableIdForFilterName(state)));
         }
 
 //        insertFilter(db, new ItemFilter(1, "Red", context.getResources().getString(R.string.filter_kind_color), null, 1));
@@ -178,5 +182,46 @@ public class ItemFilterTableHelper {
 //        insertFilter(db, new ItemFilter(7, "Sunny", context.getResources().getString(R.string.filter_kind_weather), null, 1));
 //        insertFilter(db, new ItemFilter(8, "Rainy", context.getResources().getString(R.string.filter_kind_weather), null, 1));
 //        insertFilter(db, new ItemFilter(9, "Cold", context.getResources().getString(R.string.filter_kind_weather), null, 1));
+    }
+
+    //update this function when adding new filters
+    private static int getFilterDrawableIdForFilterName(String name) {
+        if(name.equals("shirt")) {
+            return R.drawable.filter_shirt;
+        } else if (name.equals("jacket")) {
+            return -1;
+        } else if (name.equals("sweater")) {
+            return R.drawable.filter_sweater;
+        } else if (name.equals("coat")) {
+            return R.drawable.filter_coat;
+        } else if (name.equals("shorts")) {
+            return -1;
+        } else if (name.equals("pants")) {
+            return R.drawable.filter_pants;
+        } else if (name.equals("socks")) {
+            return R.drawable.filter_socks;
+        } else if (name.equals("casual")) {
+            return R.drawable.filter_casual;
+        } else if (name.equals("rainy")) {
+            return R.drawable.filter_rain;
+        } else if (name.equals("winter")) {
+            return R.drawable.filter_winter;
+        } else if (name.equals("formal")) {
+            return R.drawable.filter_formal;
+        } else if (name.equals("sport")) {
+            return R.drawable.filter_sport;
+        } else if (name.equals("blue")) {
+            return R.drawable.filter_blue;
+        } else if (name.equals("red")) {
+            return R.drawable.filter_casual;
+        } else if (name.equals("white")) {
+            return -1;
+        } else if (name.equals("orange")) {
+            return R.drawable.filter_orange;
+        } else if (name.equals("black")) {
+            return R.drawable.filter_black;
+        }
+
+        return -1;
     }
 }

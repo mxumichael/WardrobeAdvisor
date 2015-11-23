@@ -8,15 +8,18 @@ public class ItemFilter {
     private String filterName;
     private String filterKind;
     private String filterImagePath;
+    private int filterDrawableId;
+
 
     private int itemId;
 
-    public ItemFilter(int id, String filterName, String filterKind, String filterImagePath, int itemId) {
+    public ItemFilter(int id, String filterName, String filterKind, String filterImagePath, int itemId, int filterDrawableId) {
         this.id = id;
         this.filterName = filterName;
         this.filterKind = filterKind;
         this.filterImagePath = filterImagePath;
         this.itemId = itemId;
+        this.filterDrawableId = filterDrawableId;
     }
 
     public int getId() {
@@ -49,6 +52,14 @@ public class ItemFilter {
 
     public void setFilterImagePath(String filterImagePath) {
         this.filterImagePath = filterImagePath;
+    }
+
+    public int getFilterDrawableId() {
+        return filterDrawableId;
+    }
+
+    public void setFilterDrawableId(int filterDrawableId) {
+        this.filterDrawableId = filterDrawableId;
     }
 
     @Override

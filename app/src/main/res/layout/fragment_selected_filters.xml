@@ -23,8 +23,8 @@
                 android:layout_width="match_parent"/>
             <com.example.anandchandrasekar.wardrobeadvisor.VerticalButton
                 android:id="@+id/clearFiltersButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
                 android:textSize="13sp"
                 android:background="@drawable/clearfiltersbutton"
                 android:text="CLEAR">
@@ -42,7 +42,10 @@
             android:layout_height="fill_parent"
             android:layout_alignParentTop="true"
             android:fillViewport="true"
-            android:measureAllChildren="false">
+            android:measureAllChildren="false"
+            android:fadeScrollbars="false"
+            android:scrollbarThumbHorizontal="@drawable/scrollbar"
+            android:scrollbarSize="2dip">
             <LinearLayout
                 android:id="@+id/selectedFiltersLinearLayout"
                 android:layout_width="wrap_content"

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class SelectedFiltersFragment extends Fragment {
     private ArrayList<ItemFilter> selectedFiltersList;
     private HashMap<ItemFilter, View> selectedFilterViewMap;
     private LinearLayout linearLayout;
+    private HorizontalScrollView horizontalScrollView;
 
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
@@ -57,6 +59,7 @@ public class SelectedFiltersFragment extends Fragment {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_selected_filters, container, false);
         linearLayout = (LinearLayout) rootView.findViewById(R.id.selectedFiltersLinearLayout);
+        horizontalScrollView = (HorizontalScrollView) rootView.findViewById(R.id.selectedFiltersHSV);
 
         VerticalButton clearFiltersButton = (VerticalButton) rootView.findViewById(R.id.clearFiltersButton);
         clearFiltersButton.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +80,12 @@ public class SelectedFiltersFragment extends Fragment {
         this.selectedFiltersList = selectedFiltersFragmentInteractionListener.getCurrentlySelectedFilters();
         selectedFilterViewMap.clear();
         linearLayout.removeAllViewsInLayout();
+
+        if(selectedFiltersList.size() > 0) {
+            horizontalScrollView.setHorizontalScrollBarEnabled(true);
+        } else {
+            horizontalScrollView.setHorizontalScrollBarEnabled(false);
+        }
 
         Log.d("", "LAYING OUT SELECTED FILTERS- num: "+selectedFiltersList.size());
         for(int i=0;i<selectedFiltersList.size();i++){

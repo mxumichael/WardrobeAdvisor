@@ -1,7 +1,6 @@
 package com.example.anandchandrasekar.wardrobeadvisor;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
@@ -81,29 +79,26 @@ public class AllFiltersFragment extends Fragment {
         });
 
         prevFilterPageButton = (ImageButton) rootView.findViewById(R.id.prevFilterButton);
-//        prevFilterPageButton.setOnClickListener(new Button.OnClickListener() {
-//            public void onClick(View v) {
-//
-//            }
-//        });
         prevFilterPageButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
                         ImageButton view = (ImageButton) v;
-                        view.getBackground().setColorFilter(0x11000000, PorterDuff.Mode.SRC_ATOP);
+                        view.setAlpha(0.6f);
                         v.invalidate();
                         break;
                     }
                     case MotionEvent.ACTION_UP: {
+                        ImageButton view = (ImageButton) v;
+                        view.setAlpha(1.0f);
                         filterPager.setCurrentItem(filterPager.getCurrentItem() - 1, true);
                         updatePagerNavigationButtons(filterPager.getCurrentItem());
                         break;
                     }
                     case MotionEvent.ACTION_CANCEL: {
                         ImageButton view = (ImageButton) v;
-                        view.getBackground().clearColorFilter();
+                        view.setAlpha(1.0f);
                         view.invalidate();
                         break;
                     }
@@ -112,10 +107,31 @@ public class AllFiltersFragment extends Fragment {
             }
         });
         nextFilterPageButton = (ImageButton) rootView.findViewById(R.id.nextFilterButton);
-        nextFilterPageButton.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                filterPager.setCurrentItem(filterPager.getCurrentItem() + 1, true);
-                updatePagerNavigationButtons(filterPager.getCurrentItem());
+        nextFilterPageButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        ImageButton view = (ImageButton) v;
+                        view.setAlpha(0.6f);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        ImageButton view = (ImageButton) v;
+                        view.setAlpha(1.0f);
+                        filterPager.setCurrentItem(filterPager.getCurrentItem() + 1, true);
+                        updatePagerNavigationButtons(filterPager.getCurrentItem());
+                        break;
+                    }
+                    case MotionEvent.ACTION_CANCEL: {
+                        ImageButton view = (ImageButton) v;
+                        view.setAlpha(1.0f);
+                        view.invalidate();
+                        break;
+                    }
+                }
+                return true;
             }
         });
 
@@ -127,10 +143,14 @@ public class AllFiltersFragment extends Fragment {
     private void updatePagerNavigationButtons(int currentPageNumber) {
         nextFilterPageButton.setEnabled(true);
         prevFilterPageButton.setEnabled(true);
+        nextFilterPageButton.setAlpha(1.0f);
+        prevFilterPageButton.setAlpha(1.0f);
         if(currentPageNumber == NUM_PAGES-1) {
             nextFilterPageButton.setEnabled(false);
+            nextFilterPageButton.setAlpha(0.6f);
         } else if (currentPageNumber == 0) {
             prevFilterPageButton.setEnabled(false);
+            prevFilterPageButton.setAlpha(0.6f);
         }
     }
 
