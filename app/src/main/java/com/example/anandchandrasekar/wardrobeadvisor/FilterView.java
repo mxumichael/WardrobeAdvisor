@@ -20,7 +20,9 @@ public class FilterView {
 
             final Integer filterId = filter.getId();
             tv.setText(filter.getFilterName());
-            iv.setImageDrawable(context.getResources().getDrawable(R.drawable.black_blazer));
+            if(filter.getFilterDrawableId() != -1) {
+                iv.setImageDrawable(context.getResources().getDrawable(filter.getFilterDrawableId()));
+            }
 
             view.setLayoutParams(new LinearLayout.LayoutParams(150, LinearLayout.LayoutParams.MATCH_PARENT));
 
