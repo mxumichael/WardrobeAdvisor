@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -354,7 +355,7 @@ public class Scan extends AppCompatActivity {
             Item item = dbHelper.getItemById((int) parseint);//getting the scanned item;
 
             if (result != null) {
-                mTextView.setText("Itemid:"+parseint+" name:"+item.getName()+" will be changed from state:"+item.getStateName()+" to state:" + destination);
+                mTextView.setText("Itemid:"+parseint+" name:"+item.getName()+" changed from state:"+item.getStateName()+" to state:" + destination);
                 switch (destination) {
                     case "clean":
                         dbHelper.updateItemState(parseint, Item.STATE_CLEAN);
@@ -372,6 +373,14 @@ public class Scan extends AppCompatActivity {
             ImageView img  = (ImageView)findViewById(R.id.item_image_scan);
             int imgId = getResources().getIdentifier(item.getImagePath(), "drawable", getApplicationContext().getPackageName());
             img.setImageResource(imgId);
+
+            Button bulk_button = (Button)findViewById(R.id.button_clean_to_dirty);
+            bulk_button.setVisibility(View.GONE);
+            bulk_button = (Button)findViewById(R.id.button_dirty_to_in_wash);
+            bulk_button.setVisibility(View.GONE);
+            bulk_button = (Button)findViewById(R.id.button_in_wash_to_clean);
+            bulk_button.setVisibility(View.GONE);
+
         }
     }
 }
