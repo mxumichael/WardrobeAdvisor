@@ -286,6 +286,13 @@ public class Scan extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void button_done_scanning(View view) {
+        //Starting a new Intent
+        Intent nextScreen = new Intent(getApplicationContext(), Home.class);
+        startActivity(nextScreen);
+
+    }
+
     /**
      * Background task for reading the data. Do not block the UI thread while reading.
      *
@@ -355,7 +362,7 @@ public class Scan extends AppCompatActivity {
             Item item = dbHelper.getItemById((int) parseint);//getting the scanned item;
 
             if (result != null) {
-                mTextView.setText("Itemid:"+parseint+" name:"+item.getName()+" changed from state:"+item.getStateName()+" to state:" + destination);
+                mTextView.setText("Itemid:"+parseint+" name:"+item.getName()+" changed from state:"+item.getStateName()+" to state:" + destination +". waiting for next NFC scan.");
                 switch (destination) {
                     case "clean":
                         dbHelper.updateItemState(parseint, Item.STATE_CLEAN);
@@ -380,6 +387,9 @@ public class Scan extends AppCompatActivity {
             bulk_button.setVisibility(View.GONE);
             bulk_button = (Button)findViewById(R.id.button_in_wash_to_clean);
             bulk_button.setVisibility(View.GONE);
+            bulk_button = (Button)findViewById(R.id.button_done_scanning);
+            bulk_button.setVisibility(View.VISIBLE);
+
 
         }
     }
