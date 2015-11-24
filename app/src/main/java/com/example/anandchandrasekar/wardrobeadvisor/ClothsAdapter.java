@@ -1,8 +1,10 @@
 package com.example.anandchandrasekar.wardrobeadvisor;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +52,9 @@ public class ClothsAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
+        String key = this._listDataHeader.get(groupPosition);
+        Item item = this._listDataChild.get(key).get(childPosition);
+
         final String childText = (String) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
@@ -59,10 +64,14 @@ public class ClothsAdapter extends BaseExpandableListAdapter {
         }
 
         TextView txtListChild = (TextView) convertView
-                .findViewById(R.id.lblListItem);
+                .findViewById(R.id.lblListItemLabel);
 
         txtListChild.setText(childText);
         //convertView.setClickable(false);
+
+        ImageView itemIcon = (ImageView) convertView.findViewById(R.id.lblListItemImage);
+        int imgId = _context.getResources().getIdentifier(item.getImagePath(), "drawable", _context.getPackageName());
+        itemIcon.setImageBitmap(decodeSampledBitmapFromResource(_context.getResources(), imgId, 50, 50));
 
         return convertView;
     }
@@ -128,6 +137,41 @@ public class ClothsAdapter extends BaseExpandableListAdapter {
         _listDataHeader = listDataHeader;
         _listDataChild = listChildData;
         this.notifyDataSetChanged();
+    }
+
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
+    }
+
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
     }
 
 }

@@ -1,10 +1,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="55dip"
-    android:orientation="vertical">
+    android:layout_height="40dip"
+    android:orientation="horizontal">
 
+    <!--<Space-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_width="40dp"></Space>-->
+    <ImageView
+        android:id="@+id/lblListItemImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="6dp"
+        android:gravity="center"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:src="@drawable/clean"  />
     <TextView
-        android:id="@+id/lblListItem"
+        android:id="@+id/lblListItemLabel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
