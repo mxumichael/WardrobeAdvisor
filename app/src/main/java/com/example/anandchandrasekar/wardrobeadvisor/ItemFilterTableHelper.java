@@ -195,7 +195,7 @@ public class ItemFilterTableHelper {
         } else if (name.equals("coat")) {
             return R.drawable.filter_coat;
         } else if (name.equals("shorts")) {
-            return -1;
+            return R.drawable.filter_shorts;
         } else if (name.equals("pants")) {
             return R.drawable.filter_pants;
         } else if (name.equals("socks")) {
@@ -203,7 +203,7 @@ public class ItemFilterTableHelper {
         } else if (name.equals("casual")) {
             return R.drawable.filter_casual;
         } else if (name.equals("rainy")) {
-            return R.drawable.filter_rain;
+            return R.drawable.filter_rainy;
         } else if (name.equals("winter")) {
             return R.drawable.filter_winter;
         } else if (name.equals("formal")) {
@@ -213,9 +213,9 @@ public class ItemFilterTableHelper {
         } else if (name.equals("blue")) {
             return R.drawable.filter_blue;
         } else if (name.equals("red")) {
-            return R.drawable.filter_casual;
+            return R.drawable.filter_red;
         } else if (name.equals("white")) {
-            return -1;
+            return R.drawable.filter_white;
         } else if (name.equals("orange")) {
             return R.drawable.filter_orange;
         } else if (name.equals("black")) {

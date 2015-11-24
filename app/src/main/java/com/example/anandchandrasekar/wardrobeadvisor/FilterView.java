@@ -21,7 +21,12 @@ public class FilterView {
             final Integer filterId = filter.getId();
             tv.setText(filter.getFilterName());
             if(filter.getFilterDrawableId() != -1) {
-                iv.setImageDrawable(context.getResources().getDrawable(filter.getFilterDrawableId()));
+                //iv.setImageDrawable(context.getResources().getDrawable(filter.getFilterDrawableId()));
+                iv.setImageResource(filter.getFilterDrawableId());
+
+                String name = "filter_" + filter.getFilterName().toLowerCase();
+                int id = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
+                iv.setImageResource(id);
             }
 
             view.setLayoutParams(new LinearLayout.LayoutParams(150, LinearLayout.LayoutParams.MATCH_PARENT));

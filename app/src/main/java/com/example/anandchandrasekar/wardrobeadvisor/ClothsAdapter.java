@@ -10,6 +10,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,12 +19,18 @@ public class ClothsAdapter extends BaseExpandableListAdapter {
     private List<String> _listDataHeader; // header titles
     // child data in format of header title, child title
     private HashMap<String, List<Item>> _listDataChild;
+    private ArrayList<Integer> drawables;
 
     public ClothsAdapter(Context context, List<String> listDataHeader,
                          HashMap<String, List<Item>> listChildData) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
+
+        drawables = new ArrayList<Integer>();
+        drawables.add(R.drawable.clean);
+        drawables.add(R.drawable.dirty);
+        drawables.add(R.drawable.wash);
     }
 
     @Override
@@ -71,6 +78,10 @@ public class ClothsAdapter extends BaseExpandableListAdapter {
         return this._listDataHeader.get(groupPosition);
     }
 
+    private int getDrawableId(int groupPosition) {
+        return drawables.get(groupPosition);
+    }
+
     @Override
     public int getGroupCount() {
         return this._listDataHeader.size();
@@ -98,7 +109,7 @@ public class ClothsAdapter extends BaseExpandableListAdapter {
         //convertView.setClickable(false);
 
         ImageView stateIcon = (ImageView) convertView.findViewById(R.id.state_icon);
-        stateIcon.setImageResource(R.drawable.clean);
+        stateIcon.setImageResource(getDrawableId(groupPosition));
 
         return convertView;
     }
