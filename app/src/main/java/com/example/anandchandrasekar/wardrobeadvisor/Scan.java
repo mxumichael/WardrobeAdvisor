@@ -22,9 +22,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
@@ -360,18 +363,28 @@ public class Scan extends AppCompatActivity {
             String destination = sharedPref.getString("destination", "dirty");
             int parseint = Integer.parseInt(result);
             Item item = dbHelper.getItemById((int) parseint);//getting the scanned item;
+            int oldStateId = item.getState();
+            String oldState = item.getStateName();
+            int newStateId = 0;
+            String newState = oldState;
 
             if (result != null) {
                 mTextView.setText("Itemid:"+parseint+" name:"+item.getName()+" changed from state:"+item.getStateName()+" to state:" + destination +". waiting for next NFC scan.");
                 switch (destination) {
                     case "clean":
                         dbHelper.updateItemState(parseint, Item.STATE_CLEAN);
+                        newStateId = Item.STATE_CLEAN;
+                        newState = "Clean";
                         break;
                     case "dirty":
                         dbHelper.updateItemState(parseint, Item.STATE_DIRTY);
+                        newStateId = Item.STATE_DIRTY;
+                        newState = "Dirty";
                         break;
                     case "in_wash":
                         dbHelper.updateItemState(parseint, Item.STATE_INWASH);
+                        newStateId = Item.STATE_INWASH;
+                        newState = "In Wash";
                         break;
                 }
             }
@@ -381,14 +394,43 @@ public class Scan extends AppCompatActivity {
             int imgId = getResources().getIdentifier(item.getImagePath(), "drawable", getApplicationContext().getPackageName());
             img.setImageResource(imgId);
 
-            Button bulk_button = (Button)findViewById(R.id.button_clean_to_dirty);
-            bulk_button.setVisibility(View.GONE);
-            bulk_button = (Button)findViewById(R.id.button_dirty_to_in_wash);
-            bulk_button.setVisibility(View.GONE);
-            bulk_button = (Button)findViewById(R.id.button_in_wash_to_clean);
-            bulk_button.setVisibility(View.GONE);
-            bulk_button = (Button)findViewById(R.id.button_done_scanning);
-            bulk_button.setVisibility(View.VISIBLE);
+            LinearLayout scanHome = (LinearLayout)findViewById(R.id.scanHomeImage);
+            scanHome.setVisibility(View.GONE);
+
+            LinearLayout scannedView = (LinearLayout)findViewById(R.id.scannedItemView);
+            scannedView.setVisibility(View.VISIBLE);
+
+            ImageView scannedItemImage = (ImageView)findViewById(R.id.scannedItemImage);
+            scannedItemImage.setImageResource(imgId);
+
+            TextView scannedItemName = (TextView)findViewById(R.id.scannedItemName);
+            scannedItemName.setText(item.getName());
+
+            TextView scannedItemState = (TextView)findViewById(R.id.scannedItemWas);
+            scannedItemState.setText("Was:    " + oldState);
+
+            scannedItemState = (TextView)findViewById(R.id.scannedItemIs);
+            scannedItemState.setText("Now:    " + newState);
+
+            ImageView stateImage = (ImageView)findViewById(R.id.scannedItemStateOld);
+            imgId = getResources().getIdentifier(item.getStateImage(oldStateId), "drawable", getPackageName());
+            stateImage.setImageResource(imgId);
+
+            stateImage = (ImageView)findViewById(R.id.scannedItemStateNew);
+            imgId = getResources().getIdentifier(item.getStateImage(newStateId), "drawable", getPackageName());
+            stateImage.setImageResource(imgId);
+
+            TextView tview  = (TextView)findViewById(R.id.database_call);
+            tview.setText("Please scan the next item");
+
+            //Button bulk_button = (Button)findViewById(R.id.button_clean_to_dirty);
+            //bulk_button.setVisibility(View.GONE);
+            //bulk_button = (Button)findViewById(R.id.button_dirty_to_in_wash);
+            //bulk_button.setVisibility(View.GONE);
+            //bulk_button = (Button)findViewById(R.id.button_in_wash_to_clean);
+            //bulk_button.setVisibility(View.GONE);
+            //bulk_button = (Button)findViewById(R.id.button_done_scanning);
+            //bulk_button.setVisibility(View.VISIBLE);
 
 
         }

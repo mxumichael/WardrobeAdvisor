@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -61,11 +64,38 @@ public class SelectedFiltersFragment extends Fragment {
         linearLayout = (LinearLayout) rootView.findViewById(R.id.selectedFiltersLinearLayout);
         horizontalScrollView = (HorizontalScrollView) rootView.findViewById(R.id.selectedFiltersHSV);
 
-        VerticalButton clearFiltersButton = (VerticalButton) rootView.findViewById(R.id.clearFiltersButton);
+        ImageButton clearFiltersButton = (ImageButton) rootView.findViewById(R.id.clearFiltersButton);
         clearFiltersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectedFiltersFragmentInteractionListener.clearAllFilters();
+            }
+        });
+
+        clearFiltersButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        ImageButton view = (ImageButton) v;
+                        view.setAlpha(0.6f);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        ImageButton view = (ImageButton) v;
+                        view.setAlpha(1.0f);
+                        selectedFiltersFragmentInteractionListener.clearAllFilters();
+                        break;
+                    }
+                    case MotionEvent.ACTION_CANCEL: {
+                        ImageButton view = (ImageButton) v;
+                        view.setAlpha(1.0f);
+                        view.invalidate();
+                        break;
+                    }
+                }
+                return true;
             }
         });
 

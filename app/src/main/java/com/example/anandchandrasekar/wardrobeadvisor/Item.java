@@ -114,8 +114,8 @@ public class Item {
     public static String getStateImage(int state) {
         ArrayList<String> stateImages = new ArrayList<>();
         stateImages.add("clean");
-        stateImages.add("wash");
         stateImages.add("dirty");
+        stateImages.add("wash");
 
         return stateImages.get(state);
     }

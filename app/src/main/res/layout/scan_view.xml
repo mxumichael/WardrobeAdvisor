@@ -4,9 +4,10 @@
     android:layout_height="match_parent">
     <TextView
         android:id="@+id/nfc_test_title"
-        android:text="Destination State"
-        android:textSize="20sp"
-        android:layout_marginTop="1dp"
+        android:text="Select Destination State"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
@@ -33,63 +34,184 @@
             android:onClick="onRadioButtonClicked"/>
     </RadioGroup>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:visibility="visible"
+        android:id="@+id/scanHomeImage">
+    <ImageView
+        android:id="@+id/item_image_scan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_vertical"
+        android:scaleType="fitCenter"
+        android:src="@drawable/cycle_diagram" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="50"
+        android:visibility="gone"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/scannedItemView">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="81"
+                android:id="@+id/scannedItemImage"
+                android:src="@drawable/blue_polo_shirt"
+                android:adjustViewBounds="true"
+                android:layout_marginBottom="5dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="29"
+                android:id="@+id/scannedItemName"
+                android:text="My Fav Blue Shirt"
+                android:textSize="20sp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scannedItemWas"
+                android:text="Was: "
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/scannedItemStateOld"
+                android:src="@drawable/dirty"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_marginBottom="20dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scannedItemIs"
+                android:text="Is: "
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/scannedItemStateNew"
+                android:src="@drawable/clean"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"/>
+        </LinearLayout>
+    </LinearLayout>
+
     <TextView
         android:id="@+id/database_call"
         android:text="Please scan your NFC tag"
-        android:layout_marginTop="10dp"
-        android:textSize="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <ImageView
-        android:id="@+id/item_image_scan"
-        android:layout_width="300dp"
-        android:layout_height="250dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
         android:layout_gravity="center"
-        android:scaleType="fitXY"
-        android:src="@drawable/cycle_diagram" />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:text="Done Scanning"
-        android:textSize="20sp"
-        android:id="@+id/button_done_scanning"
-        android:onClick="button_done_scanning"
-        android:layout_gravity="center_horizontal"
-        android:visibility="gone"/>
-
-    <Button
+        android:textSize="22sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="move all Dirty to In Wash"
-        android:textSize="20sp"
+        android:layout_weight="3"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="30"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="50">
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="33"
+        android:text="Move all Dirty to In-Wash"
+        android:textSize="12sp"
         android:id="@+id/button_dirty_to_in_wash"
         android:layout_gravity="center_horizontal"
         android:onClick="button_dirty_to_in_wash_clicked"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingLeft="10dp"
+        android:textAllCaps="false"/>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="move all In Wash to Clean"
-        android:textSize="20sp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="33"
+        android:text="Move all In-Wash to Clean"
+        android:textSize="12sp"
         android:id="@+id/button_in_wash_to_clean"
         android:layout_gravity="center_horizontal"
         android:onClick="button_in_wash_to_clean_clicked"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textAllCaps="false"/>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="move all Clean to dirty"
-        android:textSize="20sp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="33"
+        android:text="Move all Clean to Dirty"
+        android:textSize="12sp"
         android:id="@+id/button_clean_to_dirty"
         android:layout_gravity="center_horizontal"
         android:onClick="button_clean_to_dirty_clicked"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:textAllCaps="false"/>
+    </LinearLayout>
 
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="50"
+            android:text="I'm done scanning"
+            android:textSize="20sp"
+            android:id="@+id/button_done_scanning"
+            android:onClick="button_done_scanning"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="0dp"
+            android:textAllCaps="false"
+            android:background="#E25A5A"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
 </LinearLayout>

@@ -7,45 +7,21 @@
     android:id="@+id/selectedFiltersLL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-        android:background="#F3000000">
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent"/>
-        <LinearLayout
-            android:id="@+id/clearbuttonvl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="vertical" >
-            <Space
-                android:layout_height="10dp"
-                android:layout_width="match_parent"/>
-            <com.example.anandchandrasekar.wardrobeadvisor.VerticalButton
-                android:id="@+id/clearFiltersButton"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:textSize="13sp"
-                android:background="@drawable/clearfiltersbutton"
-                android:text="CLEAR">
-            </com.example.anandchandrasekar.wardrobeadvisor.VerticalButton>
-            <Space
-                android:layout_height="10dp"
-                android:layout_width="match_parent"/>
-        </LinearLayout>
+    android:orientation="horizontal">
+        <!--android:background="#F3000000"-->
         <Space
             android:layout_width="10dp"
             android:layout_height="match_parent"/>
         <HorizontalScrollView
             android:id="@+id/selectedFiltersHSV"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_alignParentTop="true"
             android:fillViewport="true"
             android:measureAllChildren="false"
             android:fadeScrollbars="false"
             android:scrollbarThumbHorizontal="@drawable/scrollbar"
-            android:scrollbarSize="2dip">
+            android:scrollbarSize="2dip"
+            android:layout_weight="90">
             <LinearLayout
                 android:id="@+id/selectedFiltersLinearLayout"
                 android:layout_width="wrap_content"
@@ -54,5 +30,31 @@
                 android:orientation="horizontal" >
             </LinearLayout>
         </HorizontalScrollView>
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="match_parent"/>
+        <!--Button
+            android:id="@+id/clearFiltersButton"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:textSize="13sp"
+            android:background="@drawable/clearfiltersbutton"
+            android:text="CLEAR"
+            android:layout_gravity="center_vertical">
+        </Button-->
+        <ImageButton
+            android:id="@+id/clearFiltersButton"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="10"
+            android:src="@drawable/cancel"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center_vertical"
+            />
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </FrameLayout>

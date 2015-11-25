@@ -52,7 +52,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@android:color/holo_blue_dark"/>
+                    android:background="@android:color/darker_gray"/>
             </RelativeLayout>
 
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -78,7 +78,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@android:color/holo_blue_dark"/>
+                    android:background="@android:color/darker_gray" />
             </RelativeLayout>
 
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -114,7 +114,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="0dip"
                 android:layout_weight="0.1"
-                android:background="#000000">
+                android:background="#E25A5A">
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
@@ -133,14 +133,28 @@
                         android:layout_height="fill_parent"
                         android:layout_weight="0.8"
                         android:layout_margin="5dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/nfc_logo_36"
+                                android:layout_weight="30"/>
                         <Button
                             android:id="@+id/scanItemButton"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
-                            android:textSize="13sp"
-                            android:background="@drawable/clearfiltersbutton"
-                            android:text="Scan">
+                            android:textSize="18sp"
+                            android:background="@android:color/transparent"
+                            android:text="Start Scanning"
+                            android:layout_weight="70"
+                            android:layout_gravity="center"
+                            android:textColor="@android:color/white"
+                            android:textAllCaps="false">
                         </Button>
+                        </LinearLayout>
                     </RelativeLayout>
                     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         xmlns:tools="http://schemas.android.com/tools"

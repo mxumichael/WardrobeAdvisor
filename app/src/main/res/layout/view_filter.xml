@@ -13,16 +13,17 @@ android:layout_height="match_parent"
         android:background="@android:color/transparent">
         <LinearLayout
             android:id="@+id/vll"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
+            android:layout_gravity="center_horizontal"
             android:orientation="vertical"
             android:weightSum="1"
             android:background="@android:color/transparent">
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.05"
+                android:layout_weight="0.075"
                 android:background="@android:color/transparent"/>
             <com.example.anandchandrasekar.wardrobeadvisor.RoundedImageView
                 android:id="@+id/filterViewImage"
@@ -31,16 +32,17 @@ android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:padding="3dp"
                 android:scaleType="fitCenter"
-                android:layout_weight="0.65"
-                android:background="@android:color/transparent"/>
+                android:layout_weight="0.60"
+                android:background="@android:color/transparent"
+                android:layout_gravity="center_horizontal"/>
             <TextView
                 android:id="@+id/filterViewText"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_below="@id/filterViewImage"
-                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
                 android:singleLine="true"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="10sp"
                 android:textStyle="bold"
                 android:layout_weight="0.25"
@@ -48,7 +50,7 @@ android:layout_height="match_parent"
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.05"
+                android:layout_weight="0.075"
                 android:background="@android:color/transparent"/>
         </LinearLayout>
         <Space
