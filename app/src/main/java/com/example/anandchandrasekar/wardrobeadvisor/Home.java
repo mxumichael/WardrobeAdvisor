@@ -160,7 +160,11 @@ public class Home extends AppCompatActivity implements FilterKindFragment.Filter
             startActivity(i);
             return true;
         }
-
+        if (id == R.id.action_credits) {
+            Intent i = new Intent(getApplicationContext(), CreditsActivity.class);
+            startActivity(i);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 

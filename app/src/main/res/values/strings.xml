@@ -6,6 +6,7 @@
 
     <!-- Settings Screen-->
     <string name="action_settings">Settings</string>
+    <string name="action_credits">Credits</string>
     <string-array name="scanning_mode_array">
         <item>NFC</item>
         <item>QR Codes</item>
@@ -121,4 +122,5 @@
             ]
         }
     </string>
+    <string name="title_activity_credits">Credits</string>
 </resources>
